@@ -2,10 +2,22 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Fira Code', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #000000;
-  color: #ffffff;
+  font-weight: 500;
+  background-color: var(--theme-bg-default);
+  color: var(--theme-fg-default);
+
+  --theme-max-width: 1200px;
+
+  --theme-bg-default: #0E0E0E;
+  --theme-bg-subtle: #161616;
+  --theme-bg-dark: #000000;
+
+  --theme-fg-default: #ffffff;
+  --theme-fg-subtle: #161616;
+
+  --theme-border-default: #F8F8F7;
 }
 
 a {
@@ -15,5 +27,75 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+
+.max-width {
+  max-width: var(--theme-max-width);
+}
+.mx-auto {
+  margin: 0 auto;
+}
+.px-4 {
+  padding: 0 16px;
+}
+
+
+.page-banner-bg {
+  width: 100%;
+  height: 580px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+#main {
+  z-index: 1;
+  position: relative;
+}
+
+/* Home Page */
+.home-header {
+  margin: 224px 0 64px;
+}
+
+/* Post Page */
+.post-header {
+  /* width: 100%;
+  height: 580px; */
+}
+
+.post-header {
+  margin: 224px 0 64px;
+}
+.post-header-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.post-header-tags li {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.post-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+.post-page .content {
+  grid-column: 1 / 10;
+  border: 2px solid var(--theme-border-default);
+  min-height: 50vh;
+  background-color: var(--theme-bg-subtle);
+  padding: 16px;
+}
+.post-page aside {
+  grid-column: 10 / 13;
+  border: 2px solid var(--theme-border-default);
 }
 

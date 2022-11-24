@@ -1,0 +1,7 @@
+
+.pill {
+  background-color: var(--theme-bg-default);
+  /* color: var(--theme-fg-default); */
+  padding: 6px 12px;
+  font-size: 12px;
+}

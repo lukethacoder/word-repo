@@ -5,7 +5,7 @@ import '../styles/globals.css'
 import '../styles/prism.css'
 
 const firaCode = Fira_Code({
-  weight: '600',
+  weight: '500',
   subsets: ['latin'],
 })
 

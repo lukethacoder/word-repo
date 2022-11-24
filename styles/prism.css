@@ -6,7 +6,7 @@ pre[class*='language-'] {
   background: 0 0;
   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 1em;
+  font-size: 0.875em;
   font-weight: 500;
   text-align: left;
   white-space: pre;

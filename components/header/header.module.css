@@ -1,0 +1,33 @@
+
+.header {
+  width: 100%;
+  background-color: transparent;
+  color: var(--theme-fg-default);
+  position: relative;
+  top: 0;
+  padding: 0 16px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--theme-max-width);
+  margin: 0 auto;
+  display: flex;
+}
+
+.logo_link {
+  display: flex;
+  align-items: center;
+  width: auto;
+  float: left;
+}
+
+.logo_link:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  width: 3rem;
+  fill: var(--theme-fg-default);
+  margin: 0 12px 0 0;
+}
