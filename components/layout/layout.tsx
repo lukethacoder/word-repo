@@ -1,4 +1,5 @@
 import { Header } from '../header'
+import { SkipTo } from '../skip-link'
 
 export const Layout = ({
   children,
@@ -6,8 +7,8 @@ export const Layout = ({
   bannerBackgroundColor = 'var(--theme-bg-default)',
 }) => {
   return (
-    <div style={{ backgroundColor }}>
-      <a href='#main'>Skip to main content</a>
+    <div className='main' style={{ backgroundColor }}>
+      <SkipTo />
 
       <span
         className='page-banner-bg'

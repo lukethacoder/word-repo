@@ -24,13 +24,6 @@ export const PostCard = ({
       <Link className={style.link} href={`/posts/${slug}`}></Link>
       <h4 className={style.title}>{title}</h4>
       {excerpt && <p>{excerpt}</p>}
-      <div
-        style={{
-          width: '24px',
-          height: '24px',
-          backgroundColor: backgroundColor,
-        }}
-      ></div>
       <footer className={style.footer}>
         <ul className={style.tags}>
           {tags &&

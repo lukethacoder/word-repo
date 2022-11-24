@@ -1,0 +1,21 @@
+.skip_to {
+  position: absolute;
+  top: -999px;
+  left: -999px;
+  max-width: calc(100% - 16px);
+  z-index: 100;
+  color: var(--theme-fg-default);
+  background-color: var(--theme-bg-default);
+  border: 2px solid var(--theme-border-default);
+  padding: 16px;
+  pointer-events: none;
+  opacity: 0;
+  overflow:hidden;
+}
+
+.skip_to:focus-visible {
+  pointer-events: auto;
+  opacity: 1;
+  top: 8px;
+  left: 8px;
+}

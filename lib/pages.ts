@@ -13,16 +13,21 @@ const POSTS_PATH = path.join(process.cwd(), 'posts')
  */
 export const validatePages = () => {}
 
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString('en-IN', {
+const formatDate = (date: Date): string =>
+  date.toLocaleDateString('en-AU', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
   })
 
+const dateTimeFormat = new Intl.DateTimeFormat()
+
+const formatDateData = (date: Date): string => dateTimeFormat.format(date)
+
 export const formatMatter = (slug: string, matterData) => {
   // remove orig from the payload
   const { orig, ...filteredMatter } = matterData
+  const { date, edited_date } = filteredMatter.data
 
   return {
     ...filteredMatter,
@@ -30,8 +35,13 @@ export const formatMatter = (slug: string, matterData) => {
     data: {
       ...filteredMatter.data,
       slug,
+      date: formatDateData(date),
+      edited_date: formatDateData(date),
       readingTime: readingTime(filteredMatter.content),
-      dateFormatted: formatDate(filteredMatter.data.date),
+      editedDateFormatted: edited_date
+        ? formatDate(edited_date)
+        : null,
+      dateFormatted: formatDate(date),
     },
   }
 }
@@ -55,7 +65,11 @@ export const getSortedPosts = () => {
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const matterData = formatMatter(slug, matter(fileContents))
 
-    const jsDate = new Date(matterData.data.date)
+    const { date } = matterData.data
+    const jsDate =
+      typeof date === 'string'
+        ? new Date(matterData.data.date)
+        : matterData.data.date
 
     // only display content that is 'posted' based on the frontmatter data
     if (jsDate < new Date()) {
@@ -68,7 +82,10 @@ export const getSortedPosts = () => {
 
   // sort by date
   return allPostsData.sort((a, b) => {
-    if (new Date(a.date) < new Date(b.date)) {
+    const dateA = typeof a.date === 'string' ? new Date(a.date) : a.date
+    const dateB = typeof b.date === 'string' ? new Date(b.date) : b.date
+
+    if (dateA < dateB) {
       return 1
     } else {
       return -1

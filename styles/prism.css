@@ -61,7 +61,7 @@ pre[class*='language-'] ::selection,
 code[class*='language-']::selection,
 code[class*='language-'] ::selection {
   text-shadow: none;
-  background: #9aa2b1;
+  background: rgb(154 162 177 / 18%);
 }
 
 

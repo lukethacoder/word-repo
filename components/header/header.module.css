@@ -5,7 +5,7 @@
   color: var(--theme-fg-default);
   position: relative;
   top: 0;
-  padding: 0 16px;
+  padding: 16px;
 }
 
 .inner {
