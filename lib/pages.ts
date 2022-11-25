@@ -1,10 +1,21 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { load as yamlLoad, JSON_SCHEMA } from 'js-yaml'
 import readingTime from 'reading-time'
+import { MdxMetadata, Post, PostMetadata } from '../types/global'
 
 // Finding directory named "posts" from the current working directory of Node.
 const POSTS_PATH = path.join(process.cwd(), 'posts')
+
+const MATTER_CONFIG: any = {
+  engines: {
+    yaml: {
+      // needed to disable the whack conversion of date data
+      parse: (s) => yamlLoad(s, { schema: JSON_SCHEMA }),
+    },
+  },
+}
 
 /**
  * TODO:
@@ -12,6 +23,9 @@ const POSTS_PATH = path.join(process.cwd(), 'posts')
  *   - unique banner colors
  */
 export const validatePages = () => {}
+
+const toDate = (date: string | Date | null): Date | null =>
+  date ? (typeof date === 'string' ? new Date(date) : date) : null
 
 const formatDate = (date: Date): string =>
   date.toLocaleDateString('en-AU', {
@@ -24,26 +38,49 @@ const dateTimeFormat = new Intl.DateTimeFormat()
 
 const formatDateData = (date: Date): string => dateTimeFormat.format(date)
 
-export const formatMatter = (slug: string, matterData) => {
+export const formatMatter = (slug: string, content: string): Post => {
+  const matterData = matter(content, MATTER_CONFIG)
+
   // remove orig from the payload
   const { orig, ...filteredMatter } = matterData
-  const { date, edited_date } = filteredMatter.data
+  const { date, editedDate } = filteredMatter.data as MdxMetadata
+
+  const _date: Date = toDate(date) || new Date()
+  const _editedDate = editedDate && toDate(editedDate)
 
   return {
     ...filteredMatter,
     slug,
     data: {
-      ...filteredMatter.data,
+      ...(filteredMatter.data as MdxMetadata),
       slug,
-      date: formatDateData(date),
-      edited_date: formatDateData(date),
       readingTime: readingTime(filteredMatter.content),
-      editedDateFormatted: edited_date
-        ? formatDate(edited_date)
-        : null,
-      dateFormatted: formatDate(date),
+      date: formatDateData(_date),
+      dateFormatted: _date ? formatDate(_date) : '',
+      editedDate: (_editedDate && formatDateData(_editedDate)) || '',
+      editedDateFormatted: _editedDate ? formatDate(_editedDate) : '',
     },
   }
+}
+
+const getAllPosts = (): Post[] => {
+  // Reads all the files in the post directory
+  const fileNames = fs
+    .readdirSync(POSTS_PATH)
+    // double check we're only reading .mdx files
+    .filter((path) => /\.mdx?$/.test(path))
+
+  const allPostsData: Post[] = fileNames.map((filename) => {
+    const slug = filename.replace('.mdx', '')
+    const fullPath = path.join(POSTS_PATH, filename)
+
+    // get MDX file contents
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+
+    return formatMatter(slug, fileContents)
+  })
+
+  return allPostsData
 }
 
 /**
@@ -51,46 +88,16 @@ export const formatMatter = (slug: string, matterData) => {
  * @returns list of posts sorted by date
  */
 export const getSortedPosts = () => {
-  // Reads all the files in the post directory
-  const fileNames = fs
-    .readdirSync(POSTS_PATH)
-    // double check we're only reading .mdx files
-    .filter((path) => /\.mdx?$/.test(path))
+  const now = formatDateData(new Date())
 
-  const allPostsData = fileNames.reduce((posts, filename) => {
-    const slug = filename.replace('.mdx', '')
-    const fullPath = path.join(POSTS_PATH, filename)
-
-    // get MDX file contents
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const matterData = formatMatter(slug, matter(fileContents))
-
-    const { date } = matterData.data
-    const jsDate =
-      typeof date === 'string'
-        ? new Date(matterData.data.date)
-        : matterData.data.date
-
-    // only display content that is 'posted' based on the frontmatter data
-    if (jsDate < new Date()) {
-      // we don't need to return the page data here
-      posts.push(matterData.data)
-    }
-
-    return posts
-  }, [])
+  // filter out future published articles
+  const allPostsData: Post[] = getAllPosts().filter(
+    (post) => post.data.date <= now
+  )
+  console.log('posts ', allPostsData.length)
 
   // sort by date
-  return allPostsData.sort((a, b) => {
-    const dateA = typeof a.date === 'string' ? new Date(a.date) : a.date
-    const dateB = typeof b.date === 'string' ? new Date(b.date) : b.date
-
-    if (dateA < dateB) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+  return allPostsData.sort((a, b) => (a.data.date < b.data.date ? 1 : -1))
 }
 
 /**
@@ -120,17 +127,14 @@ export const getAllTagSlugs = () => {
 
       // get MDX file contents
       const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const matterData = formatMatter(slug, matter(fileContents))
-      console.log(`matterData `, matterData)
+      const matterData = formatMatter(slug, fileContents)
 
-      const jsDate = new Date(matterData.data.date)
+      const { date, tags: postTags } = matterData.data
 
       // only display content that is 'posted' based on the frontmatter data
-      if (jsDate < new Date()) {
-        console.log(`data.tags `, matterData.data.tags)
-        matterData.data.tags.forEach((tag) => tags.add(tag))
+      if (date <= formatDateData(new Date())) {
+        postTags.forEach((tag) => tags.add(tag))
       }
-      console.log(`tags `, tags)
 
       return tags
     }, new Set())
@@ -146,51 +150,24 @@ export const getAllTagSlugs = () => {
  * @param {String} - post slug
  */
 export const getPostsByTag = async (tag: string) => {
-  // const fullPath = path.join(POSTS_PATH, `${slug}.mdx`)
-  // const postContent = fs.readFileSync(fullPath, 'utf8')
-  // return formatMatter(slug, matter(postContent))
   console.log(`tag `, tag)
 
-  // Reads all the files in the post directory
-  const fileNames = fs
-    .readdirSync(POSTS_PATH)
-    // double check we're only reading .mdx files
-    .filter((path) => /\.mdx?$/.test(path))
-
-  const allPostsByTagData = fileNames.reduce((posts, filename) => {
-    const slug = filename.replace('.mdx', '')
-    const fullPath = path.join(POSTS_PATH, filename)
-
-    // get MDX file contents
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const matterData = formatMatter(slug, matter(fileContents))
-
-    const jsDate = new Date(matterData.data.date)
-
-    // only display content that is 'posted' based on the frontmatter data
-    if (jsDate < new Date() && matterData.data.tags.includes(tag)) {
-      posts.push(matterData.data)
-    }
-
-    return posts
-  }, [])
+  const allPostsByTagData: Post[] = getAllPosts().filter(
+    (post) =>
+      post.data.date <= formatDateData(new Date()) &&
+      post.data.tags.includes(tag)
+  )
 
   // sort by date
-  return allPostsByTagData.sort((a, b) => {
-    if (new Date(a.date) < new Date(b.date)) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+  return allPostsByTagData.sort((a, b) => (a.data.date < b.data.date ? 1 : -1))
 }
 
 /**
  * Fetch an individual post by slug
  * @param {String} - post slug
  */
-export const getPostDataBySlug = async (slug: string) => {
+export const getPostDataBySlug = async (slug: string): Promise<Post> => {
   const fullPath = path.join(POSTS_PATH, `${slug}.mdx`)
   const postContent = fs.readFileSync(fullPath, 'utf8')
-  return formatMatter(slug, matter(postContent))
+  return formatMatter(slug, postContent)
 }

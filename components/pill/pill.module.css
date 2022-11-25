@@ -4,4 +4,10 @@
   /* color: var(--theme-fg-default); */
   padding: 6px 12px;
   font-size: 12px;
+  border: 2px solid transparent;
+}
+.pill:focus {
+  outline: 2px solid var(--theme-border-default);
+  outline-offset: 2px;
+  border: 2px solid var(--theme-border-default);
 }

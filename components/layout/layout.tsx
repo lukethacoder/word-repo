@@ -3,8 +3,8 @@ import { SkipTo } from '../skip-link'
 
 export const Layout = ({
   children,
-  backgroundColor = 'var(--theme-bg-subtle)',
-  bannerBackgroundColor = 'var(--theme-bg-default)',
+  backgroundColor = 'var(--theme-bg-default)',
+  bannerBackgroundColor = 'var(--theme-bg-dark)',
 }) => {
   return (
     <div className='main' style={{ backgroundColor }}>

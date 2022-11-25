@@ -1,47 +1,50 @@
-import dynamic from 'next/dynamic'
-import Head from 'next/head'
-import Link from 'next/link'
-
-import { MDXRemote } from 'next-mdx-remote'
-import { serialize } from 'next-mdx-remote/serialize'
-import remarkPrism from 'remark-prism'
-import remarkGfm from 'remark-gfm'
-
-import {
-  getAllPostSlugs,
-  getAllTagSlugs,
-  getPostDataBySlug,
-  getPostsByTag,
-} from '../../lib'
-import { Header, Layout, Pill } from '../../components'
-
-const components = {
-  CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
-  Head,
-  Header: Header,
-}
+import { getAllTagSlugs, getPostsByTag } from '../../lib'
+import { Layout, PostCard } from '../../components'
+import { Post } from '../../types/global'
 
 export default function PostPage(payload) {
-  console.log('payload ', payload)
-  const { slug, posts } = payload
+  const { slug, posts }: { slug: string; posts: Post[] } = payload
 
   return (
-    <Layout
-      backgroundColor={`var(--theme-bg-default)`}
-      bannerBackgroundColor={'salmon'}
-    >
-      <div className='post-header'>
-        <div className='max-width mx-auto'>
-          <h1>{slug}</h1>
-          {/* {frontMatter.description && (
-            <p className='description'>{frontMatter.description}</p>
-          )} */}
+    <Layout>
+      <div className='page-header'>
+        <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
+          <h1 className='text-3xl'>{slug}</h1>
         </div>
       </div>
-      <div className='post-page max-width mx-auto'>
-        {posts.map((item) => (
-          <Link href={`/posts/${item.slug}`}>{item.title}</Link>
-        ))}
+
+      <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
+        <div className='col-span-9'>
+          <article className='flex flex-col gap-6'>
+            {posts.map(({ data: item }, key: number) => (
+              <PostCard
+                key={item.slug}
+                backgroundColor={key === 0 && item.color}
+                borderColor={key !== 0 && item.color}
+                slug={item.slug}
+                title={item.title}
+                excerpt={item.excerpt}
+                tags={item.tags}
+                date={{
+                  raw: item.date,
+                  dateFormatted: item.dateFormatted,
+                }}
+                readingTime={item.readingTime}
+              />
+            ))}
+          </article>
+        </div>
+        <aside className='col-span-3'>
+          <div
+            className='border-2 border-solid p-4'
+            style={{
+              borderColor: 'var(--theme-border-default)',
+              backgroundColor: 'var(--theme-bg-subtle)',
+            }}
+          >
+            stuffs
+          </div>
+        </aside>
       </div>
     </Layout>
   )
@@ -49,7 +52,6 @@ export default function PostPage(payload) {
 
 export const getStaticProps = async ({ params }) => {
   const posts = await getPostsByTag(params.slug)
-  console.log('posts ', posts)
 
   return {
     props: {
@@ -60,11 +62,8 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllTagSlugs()
-  console.log('paths ', paths)
-
   return {
-    paths,
+    paths: await getAllTagSlugs(),
     fallback: false,
   }
 }

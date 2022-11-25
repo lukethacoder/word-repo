@@ -13,19 +13,21 @@ export const PostCard = ({
   borderColor,
   backgroundColor,
 }) => {
+  console.log('readingTime ', readingTime)
+
   return (
     <article
-      className={style.article}
+      className={`p-4 relative flex flex-col ${style.article}`}
       style={{
         '--card-border-color': borderColor,
         '--card-bg': backgroundColor,
       }}
     >
       <Link className={style.link} href={`/posts/${slug}`}></Link>
-      <h4 className={style.title}>{title}</h4>
-      {excerpt && <p>{excerpt}</p>}
+      <h4 className='text-xl underline mb-1'>{title}</h4>
+      {excerpt && <p className='text-md font-normal font-sans'>{excerpt}</p>}
       <footer className={style.footer}>
-        <ul className={style.tags}>
+        <ul className='z-10 flex flex-wrap gap-2'>
           {tags &&
             tags.map((item) => (
               <li key={item}>
@@ -36,7 +38,7 @@ export const PostCard = ({
         <div className={style.metadata}>
           <time dateTime={date.raw}>{date.dateFormatted}</time>
           {` -> `}
-          <p>{readingTime.text}</p>
+          <p>{readingTime && readingTime.text}</p>
         </div>
       </footer>
     </article>

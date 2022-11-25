@@ -14,14 +14,14 @@ body {
 
   --theme-max-width: 1200px;
 
-  --theme-bg-default: #0E0E0E;
-  --theme-bg-subtle: #161616;
-  --theme-bg-dark: #000000;
+  --theme-bg-default: theme('colors.grey.700');/* #0E0E0E; */
+  --theme-bg-subtle: theme('colors.grey.500'); /* #161616; */
+  --theme-bg-dark: theme('colors.black');/* #000000; */
 
-  --theme-fg-default: #ffffff;
-  --theme-fg-subtle: #161616;
+  --theme-fg-default: theme('colors.mercury.50');
+  --theme-fg-subtle: theme('colors.mercury.500');
 
-  --theme-border-default: #F8F8F7;
+  --theme-border-default: theme('colors.mercury.400');/* #F8F8F7; */
 }
 
 .main {
@@ -56,12 +56,6 @@ code {
 .max-width {
   max-width: var(--theme-max-width);
 }
-.mx-auto {
-  margin: 0 auto;
-}
-.px-4 {
-  padding: 0 16px;
-}
 
 
 .page-banner-bg {
@@ -77,29 +71,20 @@ code {
   position: relative;
 }
 
-/* Home Page */
-.home-header {
-  margin: 224px 0 64px;
+.page-header {
+  min-height: 380px;
+  display: flex;
+  align-items: end;
 }
 
 /* Post Page */
-.post-header {
-  /* width: 100%;
-  height: 580px; */
-}
-
-.post-header {
-  margin: 186px 0 64px;
-}
-
 .post-page {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 24px;
   width: 100%;
 }
 .post-page .content {
-  grid-column: auto / span 9;
+  /* grid-column: auto / span 9; */
   border: 2px solid var(--theme-border-default);
   min-height: 50vh;
   background-color: var(--theme-bg-subtle);
@@ -112,9 +97,9 @@ code {
 .post-page .content > * {
   margin-top: 0;
 }
-.post-page > aside {
+/* .post-page > aside {
   grid-column: auto / span 3;
   border: 2px solid var(--theme-border-default);
   width: 100%;
-}
+} */
 

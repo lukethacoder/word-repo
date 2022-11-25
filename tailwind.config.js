@@ -17,25 +17,31 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       colors: {
-        primary: {
-          50: '#329576',
-          100: '#288b6c',
-          200: '#1e8162',
-          300: '#147758',
-          400: '#0a6d4e',
-          500: '#006344',
-          600: '#00593a',
-          700: '#004f30',
-          800: '#004526',
-          900: '#003b1c',
-        },
         grey: {
-          200: '#EBEBEB', // - bg - white
-          300: '#CBCBCB', // - text - dark
-          400: '#ACACAC', // - border - white
-          500: '#343434', // - border - dark
-          600: '#2C2C2C', // - text - white
-          900: '#0D0D0D', // - bg - dark
+          DEFAULT: '#161616',
+          50: '#383838',
+          100: '#353535',
+          200: '#2D2D2D',
+          300: '#252525',
+          400: '#1E1E1E',
+          500: '#161616',
+          600: '#111111',
+          700: '#0C0C0C',
+          800: '#070707',
+          900: '#020202',
+        },
+        mercury: {
+          DEFAULT: '#E8E8E8',
+          50: '#FFFFFF',
+          100: '#FCFCFC',
+          200: '#F7F7F7',
+          300: '#F2F2F2',
+          400: '#EDEDED',
+          500: '#E8E8E8',
+          600: '#DEDEDE',
+          700: '#D4D4D4',
+          800: '#C9C9C9',
+          900: '#BFBFBF',
         },
         white: '#fff',
         black: '#000',
@@ -69,7 +75,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 }

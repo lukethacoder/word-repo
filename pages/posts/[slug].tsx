@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import Link from 'next/link'
+import { GetStaticProps } from 'next'
 
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -17,20 +17,20 @@ const components = {
 }
 
 export default function PostPage(payload) {
-  console.log('payload ', payload)
-  const { source, frontMatter } = payload
+  const { source, frontMatter, toc } = payload
+  // console.log('payload ', payload)
 
   return (
     <Layout bannerBackgroundColor={frontMatter.color}>
-      <div className='post-header'>
-        <div className='max-width mx-auto px-4'>
-          <h1>{frontMatter.title}</h1>
+      <div className='page-header'>
+        <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
+          <h1 className='text-4xl'>{frontMatter.title}</h1>
           <span>
             <time dateTime={frontMatter.date}>{frontMatter.dateFormatted}</time>
             {` -> `}
             <span>{frontMatter.readingTime.text}</span>
           </span>
-          <ul className='post-header-tags'>
+          <ul className='mt-4 flex flex-wrap gap-2'>
             {frontMatter.tags &&
               frontMatter.tags.map((item) => (
                 <li>
@@ -43,36 +43,53 @@ export default function PostPage(payload) {
           )} */}
         </div>
       </div>
-      <div className='post-page max-width mx-auto px-4'>
-        <main className='content'>
-          <MDXRemote {...source} components={components} />
+      <div className='post-page grid gap-4 max-width mx-auto px-4 mb-8'>
+        <main className='content col-span-9'>
+          <div className='prose max-w-none xl:prose-lg prose-invert prose-code:font-normal'>
+            <MDXRemote {...source} components={components} />
+          </div>
         </main>
-        <aside>TOC</aside>
+        <aside className='col-span-3'>
+          <div
+            className='border-2 border-solid p-4'
+            style={{
+              borderColor: 'var(--theme-border-default)',
+              backgroundColor: 'var(--theme-bg-subtle)',
+            }}
+          >
+            TOC
+          </div>
+        </aside>
       </div>
     </Layout>
   )
 }
 
-export const getStaticProps = async ({ params }) => {
-  const postData = await getPostDataBySlug(params.slug)
-  console.log('postData ', postData)
-  const { content, data } = postData
-  console.log('data ', data)
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (params?.slug) {
+    const postData = await getPostDataBySlug(params.slug as string)
+    const { content, data } = postData
 
-  const source = await serialize(content, {
-    // Optionally pass remark/rehype plugins
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkPrism],
-      rehypePlugins: [],
-    },
-    scope: data,
-  })
+    const source = await serialize(content, {
+      // Optionally pass remark/rehype plugins
+      mdxOptions: {
+        remarkPlugins: [remarkGfm, remarkPrism],
+        rehypePlugins: [],
+        format: 'mdx',
+      },
+      parseFrontmatter: false,
+      scope: data, //  as Record<string, unknown>,
+    })
 
-  return {
-    props: {
-      source,
-      frontMatter: data,
-    },
+    return {
+      props: {
+        source,
+        toc: [],
+        frontMatter: data,
+      },
+    }
+  } else {
+    return { props: { error: '401' } }
   }
 }
 

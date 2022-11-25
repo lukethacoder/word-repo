@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { Header, Layout, PostCard } from '../components'
 
 import { getSortedPosts } from '../lib'
+import { Post } from '../types/global'
 
-export default function Home({ posts }) {
-  console.log('posts ', posts)
+export default function Home(props) {
+  const posts: Post[] = props.posts
 
   return (
     <Layout bannerBackgroundColor='var(--theme-bg-dark)'>
@@ -16,19 +17,17 @@ export default function Home({ posts }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className='home-header'>
-        <div className='max-width mx-auto px-4'>
-          <h1 style={{ margin: 0 }}>welcome to my word repo.</h1>
+      <div className='page-header max-width mx-auto px-4'>
+        <div className='h-full flex flex-col justify-end pb-12'>
+          <h1 className='text-3xl'>welcome to my word repo.</h1>
           <span>(yes, its just a blog)</span>
         </div>
       </div>
 
-      <div className='max-width mx-auto px-4'>
-        <div>
-          <article
-            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-          >
-            {posts.map((item, key) => (
+      <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
+        <div className='col-span-9'>
+          <article className='flex flex-col gap-6'>
+            {posts.map(({ data: item }, key) => (
               <PostCard
                 key={item.slug}
                 backgroundColor={key === 0 && item.color}
@@ -46,11 +45,24 @@ export default function Home({ posts }) {
             ))}
           </article>
         </div>
-        <aside>
-          <div>
+        <aside className='col-span-3'>
+          <div
+            className='border-2 border-solid p-4'
+            style={{
+              borderColor: 'var(--theme-border-default)',
+              backgroundColor: 'var(--theme-bg-subtle)',
+            }}
+          >
             <h3>find what you're looking for</h3>
           </div>
-          <div>
+
+          <div
+            className='border-2 border-solid p-4'
+            style={{
+              borderColor: 'var(--theme-border-default)',
+              backgroundColor: 'var(--theme-bg-subtle)',
+            }}
+          >
             <h3>other places to find me</h3>
             <ul>
               <li>github</li>
@@ -64,8 +76,6 @@ export default function Home({ posts }) {
   )
 }
 export function getStaticProps() {
-  const posts = getSortedPosts()
-  console.log('posts ', posts)
-
+  const posts: Post[] = getSortedPosts()
   return { props: { posts } }
 }
