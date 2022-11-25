@@ -13,8 +13,6 @@ export const PostCard = ({
   borderColor,
   backgroundColor,
 }) => {
-  console.log('readingTime ', readingTime)
-
   return (
     <article
       className={`p-4 relative flex flex-col ${style.article}`}
@@ -25,17 +23,26 @@ export const PostCard = ({
     >
       <Link className={style.link} href={`/posts/${slug}`}></Link>
       <h4 className='text-xl underline mb-1'>{title}</h4>
-      {excerpt && <p className='text-md font-normal font-sans'>{excerpt}</p>}
-      <footer className={style.footer}>
-        <ul className='z-10 flex flex-wrap gap-2'>
+      {excerpt && (
+        <p className='text-md font-normal font-sans'>
+          <span className='hover-snakeline'>{excerpt}</span>
+        </p>
+      )}
+      <footer
+        className={`flex flex-col md:flex-row md:items-end justify-end md:justify-between mt-6`}
+        style={{ flex: '1 0' }}
+      >
+        <ul className='mb-2 flex flex-wrap gap-2'>
           {tags &&
             tags.map((item) => (
-              <li key={item}>
-                <Pill name={item}>{item}</Pill>
+              <li key={item} className='flex'>
+                <Pill name={item} className='z-10'>
+                  {item}
+                </Pill>
               </li>
             ))}
         </ul>
-        <div className={style.metadata}>
+        <div className={`whitespace-nowrap ${style.metadata}`}>
           <time dateTime={date.raw}>{date.dateFormatted}</time>
           {` -> `}
           <p>{readingTime && readingTime.text}</p>

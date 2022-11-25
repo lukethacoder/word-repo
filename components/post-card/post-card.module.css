@@ -13,10 +13,6 @@
   outline-offset: 5px;
 }
 
-.link:hover ~ * {
-  text-decoration: wavy;
-}
-
 .link {
   position: absolute;
   width: 100%;
@@ -30,14 +26,6 @@
   text-decoration: underline;
   font-weight: 500;
   margin: 0;
-}
-
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  flex: 1 0;
-  align-items: flex-end;
 }
 
 .tags li {

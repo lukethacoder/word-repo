@@ -25,8 +25,9 @@ export default function Home(props) {
       </div>
 
       <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-9'>
-          <article className='flex flex-col gap-6'>
+        <div className='col-span-12'>
+          {/* <article className='flex flex-col gap-6'> */}
+          <article className='grid lg:grid-cols-2 gap-6'>
             {posts.map(({ data: item }, key) => (
               <PostCard
                 key={item.slug}
@@ -45,7 +46,7 @@ export default function Home(props) {
             ))}
           </article>
         </div>
-        <aside className='col-span-3'>
+        {/* <aside className='col-span-3'>
           <div
             className='border-2 border-solid p-4'
             style={{
@@ -70,7 +71,7 @@ export default function Home(props) {
               <li>instagram</li>
             </ul>
           </div>
-        </aside>
+        </aside> */}
       </div>
     </Layout>
   )

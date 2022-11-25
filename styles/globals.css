@@ -57,6 +57,24 @@ code {
   max-width: var(--theme-max-width);
 }
 
+article > h4 {
+  transition: all 0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
+}
+article:hover > h4 {
+  font-style: italic;
+}
+article:hover > p > .hover-snakeline {
+  background-size: 100% 2px;
+}
+
+.hover-snakeline {
+  background-image: linear-gradient(to right, #fff 0%, #fff 100%);
+  background-position: 0px 95%;
+  background-size: 0% 2px;
+  transition: background-size 0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
+  padding: 0.1% 0px;
+  background-repeat: no-repeat;
+}
 
 .page-banner-bg {
   width: 100%;
@@ -69,12 +87,13 @@ code {
 #main {
   z-index: 1;
   position: relative;
+  flex: 1 0;
 }
 
 .page-header {
   min-height: 380px;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
 }
 
 /* Post Page */

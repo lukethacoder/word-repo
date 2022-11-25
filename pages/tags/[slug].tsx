@@ -2,7 +2,7 @@ import { getAllTagSlugs, getPostsByTag } from '../../lib'
 import { Layout, PostCard } from '../../components'
 import { Post } from '../../types/global'
 
-export default function PostPage(payload) {
+export default function TagPage(payload) {
   const { slug, posts }: { slug: string; posts: Post[] } = payload
 
   return (

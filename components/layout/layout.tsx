@@ -1,3 +1,4 @@
+import { Footer } from '../footer'
 import { Header } from '../header'
 import { SkipTo } from '../skip-link'
 
@@ -19,7 +20,7 @@ export const Layout = ({
 
       <main id='main'>{children}</main>
 
-      <footer></footer>
+      <Footer />
     </div>
   )
 }

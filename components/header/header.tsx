@@ -1,12 +1,17 @@
 import Link from 'next/link'
-import style from './header.module.css'
 
 export const Header = () => {
   return (
-    <header className={style.header}>
-      <div className={style.inner}>
-        <Link href='/' className={style.logo_link}>
-          <div className={style.logo}>
+    <header className='w-full relative p-4'>
+      <div className={`flex max-width w-full mx-auto px-4`}>
+        <Link
+          href='/'
+          className={`flex items-center float-left hover:underline`}
+        >
+          <div
+            className='w-12 mr-3'
+            style={{ fill: `var(--theme-fg-default)` }}
+          >
             <svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 350 226.86'>
               <g id='Layer_1-2' data-name='Layer 1'>
                 <path d='M106.94,22.24,19.24,59l87.7,37v22.24L0,71.71V46.48L106.94,0Z'></path>

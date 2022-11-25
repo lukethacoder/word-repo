@@ -34,9 +34,8 @@ const formatDate = (date: Date): string =>
     year: 'numeric',
   })
 
-const dateTimeFormat = new Intl.DateTimeFormat()
-
-const formatDateData = (date: Date): string => dateTimeFormat.format(date)
+const formatDateData = (date: Date): string =>
+  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
 export const formatMatter = (slug: string, content: string): Post => {
   const matterData = matter(content, MATTER_CONFIG)
@@ -63,24 +62,30 @@ export const formatMatter = (slug: string, content: string): Post => {
   }
 }
 
+const getPostPaths = (): string[] => {
+  // TODO: get recursive nested posts here, pls
+  const paths = fs.readdirSync(POSTS_PATH)
+
+  return []
+}
+
 const getAllPosts = (): Post[] => {
-  // Reads all the files in the post directory
-  const fileNames = fs
-    .readdirSync(POSTS_PATH)
-    // double check we're only reading .mdx files
-    .filter((path) => /\.mdx?$/.test(path))
+  return (
+    // Read all the files in the post directory
+    fs
+      .readdirSync(POSTS_PATH)
+      // double check we're only reading .mdx files
+      .filter((path) => /\.mdx?$/.test(path))
+      .map((filename) => {
+        const slug = filename.replace('.mdx', '')
+        const fullPath = path.join(POSTS_PATH, filename)
 
-  const allPostsData: Post[] = fileNames.map((filename) => {
-    const slug = filename.replace('.mdx', '')
-    const fullPath = path.join(POSTS_PATH, filename)
+        // get MDX file contents
+        const fileContents = fs.readFileSync(fullPath, 'utf8')
 
-    // get MDX file contents
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-
-    return formatMatter(slug, fileContents)
-  })
-
-  return allPostsData
+        return formatMatter(slug, fileContents)
+      })
+  )
 }
 
 /**
@@ -94,7 +99,6 @@ export const getSortedPosts = () => {
   const allPostsData: Post[] = getAllPosts().filter(
     (post) => post.data.date <= now
   )
-  console.log('posts ', allPostsData.length)
 
   // sort by date
   return allPostsData.sort((a, b) => (a.data.date < b.data.date ? 1 : -1))
@@ -143,6 +147,38 @@ export const getAllTagSlugs = () => {
       slug: tag,
     },
   }))
+}
+
+export const getAllTagsWithMetadata = () => {
+  // Reads all the files in the post directory
+  const fileNames = fs
+    .readdirSync(POSTS_PATH)
+    // double check we're only reading .mdx files
+    .filter((path) => /\.mdx?$/.test(path))
+
+  return fileNames.reduce((tags, filename) => {
+    const slug = filename.replace('.mdx', '')
+    const fullPath = path.join(POSTS_PATH, filename)
+
+    // get MDX file contents
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const matterData = formatMatter(slug, fileContents)
+
+    const { date, tags: postTags } = matterData.data
+
+    // only display content that is 'posted' based on the frontmatter data
+    if (date <= formatDateData(new Date())) {
+      postTags.forEach((tag) => {
+        if (Object.keys(tags).includes(tag)) {
+          tags[tag] += 1
+        } else {
+          tags[tag] = 1
+        }
+      })
+    }
+
+    return tags
+  }, {})
 }
 
 /**
