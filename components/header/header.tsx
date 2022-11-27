@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const Header = () => {
   return (
-    <header className='w-full relative p-4'>
+    <header className='w-full relative py-6'>
       <div className={`flex max-width w-full mx-auto px-4`}>
         <Link
           href='/'

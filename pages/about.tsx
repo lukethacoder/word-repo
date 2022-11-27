@@ -61,7 +61,7 @@ export default function About() {
             </p>
             <p>
               You may be wondering, what the heck is a <code>word_repo</code>.
-              It's just a <span className='line-through'>fancy</span> nerdy
+              It{`'`}s just a <span className='line-through'>fancy</span> nerdy
               thing to call a dev blog. This site is home to repository of
               guides, tutorials and small projects. These can be related to
               anything from Salesforce to any other technical related topics, or

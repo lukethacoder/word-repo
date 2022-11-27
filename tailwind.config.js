@@ -70,6 +70,18 @@ module.exports = {
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
         serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'code::before': {
+              content: `normal`,
+            },
+            'code::after': {
+              content: `normal`,
+            },
+          },
+        },
+      },
     },
   },
   variants: {

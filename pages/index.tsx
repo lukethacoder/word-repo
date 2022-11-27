@@ -1,14 +1,13 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Header, Layout, PostCard } from '../components'
+import { InferGetStaticPropsType } from 'next/types'
+import { Layout, PostCard } from '../components'
 
-import { getSortedPosts } from '../lib'
-import { Post } from '../types/global'
+import { Post } from '../lib'
+import { IPost } from '../types/global'
 
-export default function Home(props) {
-  const posts: Post[] = props.posts
-
+export default function Home({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout bannerBackgroundColor='var(--theme-bg-dark)'>
       <Head>
@@ -31,8 +30,8 @@ export default function Home(props) {
             {posts.map(({ data: item }, key) => (
               <PostCard
                 key={item.slug}
-                backgroundColor={key === 0 && item.color}
-                borderColor={key !== 0 && item.color}
+                backgroundColor={key === 0 ? item.color : ''}
+                borderColor={key !== 0 ? item.color : ''}
                 slug={item.slug}
                 title={item.title}
                 excerpt={item.excerpt}
@@ -76,7 +75,7 @@ export default function Home(props) {
     </Layout>
   )
 }
-export function getStaticProps() {
-  const posts: Post[] = getSortedPosts()
+export const getStaticProps = async () => {
+  const posts: IPost[] = await Post.getAll()
   return { props: { posts } }
 }

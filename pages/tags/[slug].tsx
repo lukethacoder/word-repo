@@ -1,10 +1,16 @@
-import { getAllTagSlugs, getPostsByTag } from '../../lib'
+import { GetStaticProps } from 'next/types'
+
+import { Tag, Post } from '../../lib'
 import { Layout, PostCard } from '../../components'
-import { Post } from '../../types/global'
+import { IPost } from '../../types/global'
 
-export default function TagPage(payload) {
-  const { slug, posts }: { slug: string; posts: Post[] } = payload
-
+export default function TagPage({
+  slug,
+  posts,
+}: {
+  slug: string
+  posts: IPost[]
+}) {
   return (
     <Layout>
       <div className='page-header'>
@@ -19,8 +25,8 @@ export default function TagPage(payload) {
             {posts.map(({ data: item }, key: number) => (
               <PostCard
                 key={item.slug}
-                backgroundColor={key === 0 && item.color}
-                borderColor={key !== 0 && item.color}
+                backgroundColor={key === 0 ? item.color : ''}
+                borderColor={key !== 0 ? item.color : ''}
                 slug={item.slug}
                 title={item.title}
                 excerpt={item.excerpt}
@@ -50,12 +56,12 @@ export default function TagPage(payload) {
   )
 }
 
-export const getStaticProps = async ({ params }) => {
-  const posts = await getPostsByTag(params.slug)
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const posts = await Post.getByTag(params?.slug as string)
 
   return {
     props: {
-      slug: params.slug,
+      slug: params?.slug,
       posts,
     },
   }
@@ -63,7 +69,7 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
   return {
-    paths: await getAllTagSlugs(),
+    paths: await Tag.getAllSlugs(),
     fallback: false,
   }
 }

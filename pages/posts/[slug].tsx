@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { GetStaticProps } from 'next'
+import { InferGetStaticPropsType, GetStaticProps } from 'next/types'
 
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import remarkPrism from 'remark-prism'
 import remarkGfm from 'remark-gfm'
 
-import { getAllPostSlugs, getPostDataBySlug } from '../../lib'
-import { Header, Layout, Pill } from '../../components'
+import { getTocFromAst, Post } from '../../lib'
+import { Header, Layout, Pill, TableOfContents } from '../../components'
 
 const components = {
   CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
@@ -16,10 +16,12 @@ const components = {
   Header: Header,
 }
 
-export default function PostPage(payload) {
-  const { source, frontMatter, toc } = payload
-  // console.log('payload ', payload)
-
+export default function PostPage({
+  source,
+  frontMatter,
+  toc,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log('toc ', toc)
   return (
     <Layout bannerBackgroundColor={frontMatter.color}>
       <div className='page-header'>
@@ -32,24 +34,24 @@ export default function PostPage(payload) {
           </span>
           <ul className='mt-4 flex flex-wrap gap-2'>
             {frontMatter.tags &&
-              frontMatter.tags.map((item) => (
-                <li>
+              frontMatter.tags.map((item: string) => (
+                <li key={item}>
                   <Pill name={item}>{item}</Pill>
                 </li>
               ))}
           </ul>
-          {/* {frontMatter.description && (
-            <p className='description'>{frontMatter.description}</p>
-          )} */}
         </div>
       </div>
       <div className='post-page grid gap-4 max-width mx-auto px-4 mb-8'>
-        <main className='content col-span-9'>
-          <div className='prose max-w-none xl:prose-lg prose-invert prose-code:font-normal'>
+        <main className='content col-span-12 lg:col-span-9'>
+          <div className='prose prose-headings:font-mono max-w-none xl:prose-lg prose-invert prose-code:font-normal'>
             <MDXRemote {...source} components={components} />
           </div>
+          <div>
+            <h4>Commentz</h4>
+          </div>
         </main>
-        <aside className='col-span-3'>
+        <aside className='col-span-12 lg:col-span-3'>
           <div
             className='border-2 border-solid p-4'
             style={{
@@ -57,7 +59,7 @@ export default function PostPage(payload) {
               backgroundColor: 'var(--theme-bg-subtle)',
             }}
           >
-            TOC
+            {toc && <TableOfContents items={toc}></TableOfContents>}
           </div>
         </aside>
       </div>
@@ -67,24 +69,30 @@ export default function PostPage(payload) {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (params?.slug) {
-    const postData = await getPostDataBySlug(params.slug as string)
+    const postData = await Post.getBySlug(params.slug as string)
     const { content, data } = postData
 
+    let toc = {}
     const source = await serialize(content, {
-      // Optionally pass remark/rehype plugins
       mdxOptions: {
-        remarkPlugins: [remarkGfm, remarkPrism],
+        remarkPlugins: [
+          remarkGfm,
+          remarkPrism,
+          () => (ast) => {
+            toc = getTocFromAst(ast, {})
+          },
+        ],
         rehypePlugins: [],
         format: 'mdx',
       },
       parseFrontmatter: false,
-      scope: data, //  as Record<string, unknown>,
+      scope: data as any,
     })
 
     return {
       props: {
         source,
-        toc: [],
+        toc,
         frontMatter: data,
       },
     }
@@ -94,11 +102,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllPostSlugs()
-  console.log('paths ', paths)
-
   return {
-    paths,
+    paths: await Post.getAllSlugs(),
     fallback: false,
   }
 }

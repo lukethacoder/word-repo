@@ -1,13 +1,11 @@
-import {
-  getAllTagSlugs,
-  getAllTagsWithMetadata,
-  getPostsByTag,
-} from '../../lib'
+import { InferGetStaticPropsType } from 'next/types'
+
+import { Tag } from '../../lib'
 import { Layout, Pill } from '../../components'
 
-export default function TagsPage(payload) {
-  const { tags } = payload
-
+export default function TagsPage({
+  tags,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   console.log('tags ', tags)
 
   return (
@@ -46,12 +44,9 @@ export default function TagsPage(payload) {
 }
 
 export const getStaticProps = async () => {
-  const tagsObject = await getAllTagsWithMetadata()
-  const tags = Object.entries(tagsObject)
-
   return {
     props: {
-      tags,
+      tags: Object.entries(await Tag.getAllWithMetadata()),
     },
   }
 }

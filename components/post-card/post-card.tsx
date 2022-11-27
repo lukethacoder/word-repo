@@ -1,7 +1,22 @@
 import Link from 'next/link'
+import { ReadTimeResults } from 'reading-time'
 import { Pill } from '../pill'
 
 import style from './post-card.module.css'
+
+interface IPostCard {
+  slug: string
+  title: string
+  excerpt: string
+  tags: string[]
+  date: {
+    raw: string
+    dateFormatted: string
+  }
+  readingTime: ReadTimeResults
+  borderColor: string
+  backgroundColor: string
+}
 
 export const PostCard = ({
   slug,
@@ -12,14 +27,16 @@ export const PostCard = ({
   readingTime,
   borderColor,
   backgroundColor,
-}) => {
+}: IPostCard) => {
   return (
     <article
       className={`p-4 relative flex flex-col ${style.article}`}
-      style={{
-        '--card-border-color': borderColor,
-        '--card-bg': backgroundColor,
-      }}
+      style={
+        {
+          '--card-border-color': borderColor,
+          '--card-bg': backgroundColor,
+        } as React.CSSProperties
+      }
     >
       <Link className={style.link} href={`/posts/${slug}`}></Link>
       <h4 className='text-xl underline mb-1'>{title}</h4>

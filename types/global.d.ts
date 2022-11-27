@@ -1,15 +1,16 @@
 import { ReadTimeResults } from 'reading-time'
 
-export interface MdxMetadata {
+export interface IMdxMetadata {
   title: string
   excerpt: string
   color: string
   date: string
   editedDate?: string
+  is_draft?: boolean
   tags: string[]
 }
 
-export interface PostMetadata {
+export interface IPostMetadata {
   slug: string
   title: string
   excerpt: string
@@ -18,12 +19,13 @@ export interface PostMetadata {
   dateFormatted: string
   editedDate?: string
   editedDateFormatted: string
+  isDraft?: boolean
   readingTime: ReadTimeResults
   tags: string[]
 }
 
-export interface Post {
+export interface IPost {
   slug: string
   content: string
-  data: PostMetadata
+  data: IPostMetadata
 }
