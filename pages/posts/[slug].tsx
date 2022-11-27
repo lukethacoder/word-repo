@@ -6,6 +6,8 @@ import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import remarkPrism from 'remark-prism'
 import remarkGfm from 'remark-gfm'
+import { remarkMdxToc } from 'remark-mdx-toc'
+import remarkSlug from 'remark-slug'
 
 import { getTocFromAst, Post } from '../../lib'
 import { Header, Layout, Pill, TableOfContents } from '../../components'
@@ -21,7 +23,6 @@ export default function PostPage({
   frontMatter,
   toc,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log('toc ', toc)
   return (
     <Layout bannerBackgroundColor={frontMatter.color}>
       <div className='page-header'>
@@ -43,7 +44,7 @@ export default function PostPage({
         </div>
       </div>
       <div className='post-page grid gap-4 max-width mx-auto px-4 mb-8'>
-        <main className='content col-span-12 lg:col-span-9'>
+        <main className='content col-span-12 lg:col-span-8'>
           <div className='prose prose-headings:font-mono max-w-none xl:prose-lg prose-invert prose-code:font-normal'>
             <MDXRemote {...source} components={components} />
           </div>
@@ -51,9 +52,9 @@ export default function PostPage({
             <h4>Commentz</h4>
           </div>
         </main>
-        <aside className='col-span-12 lg:col-span-3'>
+        <aside className='col-span-12 lg:col-span-4'>
           <div
-            className='border-2 border-solid p-4'
+            className='sticky top-[16px] border-2 border-solid p-4'
             style={{
               borderColor: 'var(--theme-border-default)',
               backgroundColor: 'var(--theme-bg-subtle)',
@@ -76,10 +77,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const source = await serialize(content, {
       mdxOptions: {
         remarkPlugins: [
+          remarkSlug,
           remarkGfm,
           remarkPrism,
+          remarkMdxToc,
           () => (ast) => {
-            toc = getTocFromAst(ast, {})
+            // get the TOC data from the remarkMdxToc
+            toc = getTocFromAst(ast)
           },
         ],
         rehypePlugins: [],

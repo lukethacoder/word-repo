@@ -1,120 +1,60 @@
-import { Root, Heading } from 'mdast'
+import { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
-import { toString } from 'mdast-util-to-string'
-import { name as isIdentifierName } from 'estree-util-is-identifier-name'
-import { MdxJsxFlowElement, MdxJsxAttribute } from 'mdast-util-mdx-jsx'
 
 export type TocEntry = {
   depth: number
   // value of the heading
   value: string
+  id?: string
   attributes: { [key: string]: string }
   children: TocEntry[]
 }
 
-export type CustomTag = {
-  /// regex to match the tag name
-  name: RegExp
-  /// get depth from name
-  depth: (name: string) => number
-}
+const handleObjectExpression = (objectExpression: any) => {
+  const metadata = objectExpression.properties.reduce(
+    (acc: any, { key, value }: any) => {
+      // if children, loop and recursively handle them
+      if (key.value === 'children') {
+        acc[key.value] = value?.elements
+          ? value.elements.map((item: any) => handleObjectExpression(item))
+          : []
+        return acc
+      }
 
-export interface RemarkMdxTocOptions {
-  /**
-   * If specified, export toc using the name.
-   * Otherwise, use `toc` as the name.
-   */
-  name?: string
-
-  /**
-   * Add custom tag to toc
-   */
-  customTags?: CustomTag[]
-}
-
-export const getTocFromAst = (
-  ast: any,
-  options: RemarkMdxTocOptions
-): TocEntry[] => {
-  const mdast = ast as Root
-  const name = 'toc'
-  if (!isIdentifierName(name)) {
-    throw new Error(`Invalid name for an identifier: ${name}`)
-  }
-
-  // structured toc
-  const toc: TocEntry[] = []
-
-  // flat toc (share objects in toc, only for iterating)
-  const flatToc: TocEntry[] = []
-
-  const createEntry = (
-    node: Heading | MdxJsxFlowElement,
-    depth: number
-  ): TocEntry => {
-    let attributes = (node.data || {}) as TocEntry['attributes']
-    if (node.type === 'mdxJsxFlowElement') {
-      attributes = Object.fromEntries(
-        node.attributes
-          .filter(
-            (attribute) =>
-              attribute.type === 'mdxJsxAttribute' &&
-              typeof attribute.value === 'string'
-          )
-          .map((attribute) => [
-            (attribute as MdxJsxAttribute).name,
-            attribute.value,
-          ])
-      ) as TocEntry['attributes']
-    }
-    return {
-      depth,
-      value: toString(node, { includeImageAlt: false }),
-      attributes,
-      children: [],
-    }
-  }
-
-  visit(mdast, ['heading', 'mdxJsxFlowElement'], (node) => {
-    let depth = 0
-    if (node.type === 'mdxJsxFlowElement') {
-      let valid = false
-      if (/^h[1-6]$/.test(node.name || '')) {
-        valid = true
-        depth = parseInt(node.name!.substring(1))
-      } else if (options.customTags) {
-        for (const tag of options.customTags) {
-          if (tag.name.test(node.name || '')) {
-            valid = true
-            depth = tag.depth(node.name || '')
-            break
+      // 'attributes'
+      if (!value.value && value.properties) {
+        // loop to find the 'id' property, it is the only one we care about
+        value.properties.forEach((property: any) => {
+          if (property.key.value === 'id') {
+            acc['id'] = property.value.value || null
           }
-        }
+        })
+        return acc
       }
 
-      if (!valid) {
-        return
-      }
-    } else if (node.type === 'heading') {
-      depth = node.depth
-    } else {
-      return
+      acc[key.value] = value.value || null
+      return acc
+    },
+    { attributes: null }
+  )
+  return metadata
+}
+
+export const getTocFromAst = (ast: any): TocEntry[] => {
+  let toc: TocEntry[] = []
+
+  visit(ast as Root, ['mdxjsEsm'], (node: any) => {
+    if (
+      (node?.data?.estree as any)?.body?.[0]?.declaration?.declarations?.[0]
+        ?.init?.elements?.[0]
+    ) {
+      // assume remarkMdxToc has come in and done its magic
+      toc = (
+        node?.data?.estree as any
+      )?.body?.[0]?.declaration?.declarations?.[0]?.init?.elements.map(
+        (item: any) => handleObjectExpression(item)
+      )
     }
-
-    const entry = createEntry(node, depth)
-    flatToc.push(entry)
-
-    // find the last node that is less deep (parant)
-    // Fall back to root
-    let parent: TocEntry[] = toc
-    for (let i = flatToc.length - 1; i >= 0; --i) {
-      const current = flatToc[i]
-      if (current.depth < entry.depth) {
-        parent = current.children
-        break
-      }
-    }
-    parent.push(entry)
   })
 
   return toc

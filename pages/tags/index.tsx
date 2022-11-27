@@ -6,8 +6,6 @@ import { Layout, Pill } from '../../components'
 export default function TagsPage({
   tags,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log('tags ', tags)
-
   return (
     <Layout>
       <div className='page-header'>
