@@ -58,7 +58,7 @@ export const formatMatter = (slug: string, content: string): IPost => {
     data: {
       ...(filteredMatter.data as IMdxMetadata),
       slug,
-      isDraft: filteredMatter.data.is_draft || false,
+      draft: filteredMatter.data.draft || false,
       readingTime: readingTime(filteredMatter.content),
       date: formatDateData(_date),
       dateFormatted: _date ? formatDate(_date) : '',

@@ -53,23 +53,9 @@ export default function Home({
               backgroundColor: 'var(--theme-bg-subtle)',
             }}
           >
-            <h3>find what you're looking for</h3>
+            <h3>put a search here once we have more articles to search over?</h3>
           </div>
 
-          <div
-            className='border-2 border-solid p-4'
-            style={{
-              borderColor: 'var(--theme-border-default)',
-              backgroundColor: 'var(--theme-bg-subtle)',
-            }}
-          >
-            <h3>other places to find me</h3>
-            <ul>
-              <li>github</li>
-              <li>linkedin</li>
-              <li>instagram</li>
-            </ul>
-          </div>
         </aside> */}
       </div>
     </Layout>

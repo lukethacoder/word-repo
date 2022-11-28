@@ -39,6 +39,24 @@ a {
   box-sizing: border-box;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #303438 var(--theme-bg-dark);
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--theme-bg-dark);
+  border-radius: 20px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #303438;
+  border-radius: 20px;
+  border: 3px solid var(--theme-bg-dark);
+}
+
 kbd {
   background-color: var(--theme-bg-dark);
   padding: 1px 5px;
@@ -76,6 +94,56 @@ article:hover > p > .hover-snakeline {
   background-repeat: no-repeat;
 }
 
+.prose a:hover {
+  font-style: italic;
+  text-decoration: underline;
+  color: var(--theme-post-feature, #ffffff);
+}
+.code-block code {
+  /* make room for the code language pill */
+  padding: 0 32px 0 0;
+  float: left;
+}
+
+.prose blockquote {
+  padding: theme('spacing.2') theme('spacing.4');
+  font-style: normal;
+  border-radius: theme('borderRadius.sm');
+}
+.prose blockquote code {
+  color: var(--tw-prose-code);
+}
+.prose blockquote,
+.prose blockquote.primary {
+  background-color: #00153c;
+  color: #addbff;
+  border-color: #addbff;
+}
+
+/* pending https://github.com/jknyght9/remark-blockquotes-extended/pull/1 */
+.prose blockquote.succes,
+.prose blockquote.success {
+  background-color: #001d09;
+  color: #77ec95;
+  border-color: #77ec95;
+}
+
+.prose blockquote.warning {
+  background-color: #3b2300;
+  color: #eac54f;
+  border-color: #eac54f;
+}
+
+.prose blockquote.caution {
+  background-color: #39000d;
+  color: #ffc7c5;
+  border-color: #ffc7c5;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
 .page-banner-bg {
   width: 100%;
   height: 580px;
@@ -102,23 +170,28 @@ article:hover > p > .hover-snakeline {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   width: 100%;
 }
-.post-page .content {
-  /* grid-column: auto / span 9; */
-  border: 2px solid var(--theme-border-default);
-  min-height: 50vh;
-  background-color: var(--theme-bg-subtle);
-  padding: 16px;
+.post-page .post-main {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 400;
   width: 100%;
 }
-.post-page .content > * {
+
+.post-page .post-main .content,
+.post-page .post-main .comments {
+  border: 2px solid var(--theme-border-default);
+  background-color: var(--theme-bg-subtle);
+  padding: 16px;
+}
+
+.post-page .post-main .content {
+  min-height: 50vh;
+}
+
+.post-page .post-main .content {
+  
+}
+
+.post-page .post-main > * {
   margin-top: 0;
 }
-/* .post-page > aside {
-  grid-column: auto / span 3;
-  border: 2px solid var(--theme-border-default);
-  width: 100%;
-} */
-

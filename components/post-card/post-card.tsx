@@ -49,7 +49,7 @@ export const PostCard = ({
         className={`flex flex-col md:flex-row md:items-end justify-end md:justify-between mt-6`}
         style={{ flex: '1 0' }}
       >
-        <ul className='mb-2 flex flex-wrap gap-2'>
+        <ul className='flex flex-wrap gap-2 mr-1 mb-2 md:mb-0'>
           {tags &&
             tags.map((item) => (
               <li key={item} className='flex'>
@@ -59,7 +59,7 @@ export const PostCard = ({
               </li>
             ))}
         </ul>
-        <div className={`whitespace-nowrap ${style.metadata}`}>
+        <div className={`md:mb-1 whitespace-nowrap ${style.metadata}`}>
           <time dateTime={date.raw}>{date.dateFormatted}</time>
           {` -> `}
           <p>{readingTime && readingTime.text}</p>

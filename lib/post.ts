@@ -27,7 +27,7 @@ const getAll = async (): Promise<IPost[]> => {
           )
       )
       // filter out draft and future posts
-      .filter((item) => !item.data.isDraft && item.data.date <= now)
+      .filter((item) => !item.data.draft && item.data.date <= now)
       .sort(sortPostByDate)
   )
 }

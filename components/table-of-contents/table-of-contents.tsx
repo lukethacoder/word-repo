@@ -8,7 +8,10 @@ interface ITableOfContents {
 const TocItem = ({ data }: { data: TocEntry }) => {
   return data.id ? (
     <li className='mb-1'>
-      <a href={`#${data.id}`} className='underline hover:italic'>
+      <a
+        href={`#${data.id}`}
+        className='hover:underline hover:italic focus-visible:underline'
+      >
         {data.value}
       </a>
       {data.children && (

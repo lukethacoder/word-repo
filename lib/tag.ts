@@ -17,10 +17,10 @@ const getAllSlugs = async (): Promise<{ params: { slug: string } }[]> => {
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const matterData = formatMatter(slug, fileContents)
 
-      const { date, tags: postTags } = matterData.data
+      const { date, draft, tags: postTags } = matterData.data
 
       // only display content that is 'posted' based on the frontmatter data
-      if (date <= formatDateData(new Date())) {
+      if (date <= formatDateData(new Date()) && draft !== true) {
         postTags.forEach((tag: string) => tags.add(tag))
       }
 
@@ -45,10 +45,10 @@ const getAllWithMetadata = async (): Promise<{
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const matterData = formatMatter(slug, fileContents)
 
-    const { date, tags: postTags } = matterData.data
+    const { date, draft, tags: postTags } = matterData.data
 
     // only display content that is 'posted' based on the frontmatter data
-    if (date <= formatDateData(new Date())) {
+    if (date <= formatDateData(new Date()) && draft !== true) {
       postTags.forEach((tag) => {
         if (Object.keys(tags).includes(tag)) {
           tags[tag] += 1

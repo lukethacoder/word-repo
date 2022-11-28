@@ -6,7 +6,7 @@ export interface IMdxMetadata {
   color: string
   date: string
   editedDate?: string
-  is_draft?: boolean
+  draft?: boolean
   tags: string[]
 }
 
@@ -19,7 +19,7 @@ export interface IPostMetadata {
   dateFormatted: string
   editedDate?: string
   editedDateFormatted: string
-  isDraft?: boolean
+  draft?: boolean
   readingTime: ReadTimeResults
   tags: string[]
 }

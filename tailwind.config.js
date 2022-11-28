@@ -79,6 +79,15 @@ module.exports = {
             'code::after': {
               content: `normal`,
             },
+            blockquote: {
+              fontWeight: `400`,
+            },
+            'blockquote p::before': {
+              content: `normal`,
+            },
+            'blockquote p::after': {
+              content: `normal`,
+            },
           },
         },
       },

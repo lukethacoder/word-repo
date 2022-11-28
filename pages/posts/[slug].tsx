@@ -8,12 +8,15 @@ import remarkPrism from 'remark-prism'
 import remarkGfm from 'remark-gfm'
 import { remarkMdxToc } from 'remark-mdx-toc'
 import remarkSlug from 'remark-slug'
+import remarkBlockQuotesExtended from 'remark-blockquotes-extended'
+import rehypeExternalLinks from 'rehype-external-links'
 
 import { getTocFromAst, Post } from '../../lib'
 import { Header, Layout, Pill, TableOfContents } from '../../components'
 
 const components = {
   CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
+  pre: dynamic(() => import('../../components/code-block/dynamic')),
   Head,
   Header: Header,
 }
@@ -23,6 +26,9 @@ export default function PostPage({
   frontMatter,
   toc,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // if only one heading, don't bother showing the TOC
+  const showToc = toc.length > 1
+
   return (
     <Layout bannerBackgroundColor={frontMatter.color}>
       <div className='page-header'>
@@ -43,25 +49,36 @@ export default function PostPage({
           </ul>
         </div>
       </div>
-      <div className='post-page grid gap-4 max-width mx-auto px-4 mb-8'>
-        <main className='content col-span-12 lg:col-span-8'>
-          <div className='prose prose-headings:font-mono max-w-none xl:prose-lg prose-invert prose-code:font-normal'>
+      <div
+        className='post-page grid gap-4 max-width mx-auto px-4 mb-8'
+        style={
+          { '--theme-post-feature': frontMatter.color } as React.CSSProperties
+        }
+      >
+        <main
+          className={`post-main flex flex-col gap-4 col-span-12 ${
+            showToc ? `lg:col-span-8` : 'lg:col-span-9'
+          }`}
+        >
+          <div className='content prose prose-invert prose-headings:font-mono max-w-none prose-code:font-normal'>
             <MDXRemote {...source} components={components} />
           </div>
-          <div>
-            <h4>Commentz</h4>
-          </div>
+          {/* <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
+            <h3>Commentz</h3>
+          </div> */}
         </main>
-        <aside className='col-span-12 lg:col-span-4'>
-          <div
-            className='sticky top-[16px] border-2 border-solid p-4'
-            style={{
-              borderColor: 'var(--theme-border-default)',
-              backgroundColor: 'var(--theme-bg-subtle)',
-            }}
-          >
-            {toc && <TableOfContents items={toc}></TableOfContents>}
-          </div>
+        <aside className={`col-span-12 ${showToc ? 'lg:col-span-4' : ''}`}>
+          {toc.length > 1 && (
+            <div
+              className='sticky top-[16px] border-2 border-solid p-4'
+              style={{
+                borderColor: 'var(--theme-border-default)',
+                backgroundColor: 'var(--theme-bg-subtle)',
+              }}
+            >
+              <TableOfContents items={toc}></TableOfContents>
+            </div>
+          )}
         </aside>
       </div>
     </Layout>
@@ -81,12 +98,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           remarkGfm,
           remarkPrism,
           remarkMdxToc,
+          remarkBlockQuotesExtended,
           () => (ast) => {
             // get the TOC data from the remarkMdxToc
             toc = getTocFromAst(ast)
           },
         ],
-        rehypePlugins: [],
+        rehypePlugins: [
+          [
+            rehypeExternalLinks,
+            {
+              rel: ['nofollow', 'noopener', 'noreferrer'],
+              target: '_blank',
+            },
+          ],
+        ],
         format: 'mdx',
       },
       parseFrontmatter: false,

@@ -20,8 +20,8 @@ export default function TagPage({
       </div>
 
       <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-9'>
-          <article className='flex flex-col gap-6'>
+        <div className='col-span-12'>
+          <article className='grid lg:grid-cols-2 gap-6'>
             {posts.map(({ data: item }, key: number) => (
               <PostCard
                 key={item.slug}
@@ -40,17 +40,6 @@ export default function TagPage({
             ))}
           </article>
         </div>
-        <aside className='col-span-3'>
-          <div
-            className='border-2 border-solid p-4'
-            style={{
-              borderColor: 'var(--theme-border-default)',
-              backgroundColor: 'var(--theme-bg-subtle)',
-            }}
-          >
-            stuffs
-          </div>
-        </aside>
       </div>
     </Layout>
   )

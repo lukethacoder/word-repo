@@ -44,27 +44,55 @@ export default function About() {
           <div className='prose lg:prose-lg prose-invert prose-code:font-normal font-sans font-normal'>
             <p>
               Hi, I am Luke, a Full Stack Developer currently working at{' '}
-              <a href='' style={{ color: '#777777' }}>
+              <a
+                rel='nofollow noopener noreferrer'
+                href='https://www.deloittedigital.com.au/'
+                style={{ color: '#777777' }}
+              >
                 Deloitte Digital<span style={{ color: '#86bc25' }}>.</span>
               </a>{' '}
               as a Technical Specialist. Day to day I work in and around
               Salesforce on both the <code>{`{front|back}`}end</code> (
-              <a href='https://lwc.dev/'>LWC</a>/
-              <a href='https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_intro_what_is_apex.htm'>
+              <a rel='nofollow noopener noreferrer' href='https://lwc.dev/'>
+                LWC
+              </a>
+              /
+              <a
+                rel='nofollow noopener noreferrer'
+                href='https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_intro_what_is_apex.htm'
+              >
                 APEX
               </a>
               ). In my free time I enjoy perfecting my craft with{' '}
-              <a href='https://reactjs.org/'>React</a>,{' '}
-              <a href='https://nextjs.org/'>NextJS</a>,{' '}
-              <a href='https://www.typescriptlang.org/'>TypeScript</a> and{' '}
-              <a href='https://www.rust-lang.org/'>Rust</a>.
+              <a rel='nofollow noopener noreferrer' href='https://reactjs.org/'>
+                React
+              </a>
+              ,{' '}
+              <a rel='nofollow noopener noreferrer' href='https://nextjs.org/'>
+                NextJS
+              </a>
+              ,{' '}
+              <a
+                rel='nofollow noopener noreferrer'
+                href='https://www.typescriptlang.org/'
+              >
+                TypeScript
+              </a>{' '}
+              and{' '}
+              <a
+                rel='nofollow noopener noreferrer'
+                href='https://www.rust-lang.org/'
+              >
+                Rust
+              </a>
+              .
             </p>
             <p>
               You may be wondering, what the heck is a <code>word_repo</code>.
               It{`'`}s just a <span className='line-through'>fancy</span> nerdy
-              thing to call a dev blog. This site is home to repository of
+              thing to call a dev blog. This site is home to a variety of
               guides, tutorials and small projects. These can be related to
-              anything from Salesforce to any other technical related topics, or
+              anything from Salesforce to other technical related topics, or
               even my other hobbies <code>🥁|📷|🎧</code>.
             </p>
             <p>I can also be found elsewhere around the internet:</p>

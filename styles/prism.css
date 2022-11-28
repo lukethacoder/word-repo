@@ -28,8 +28,15 @@ pre[class*='language-rust'],
 code[class*='language-js'],
 pre[class*='language-js'],
 code[class*='language-javascript'],
-pre[class*='language-javascript'] {
+pre[class*='language-javascript'],
+code[class*='language-typescript'],
+pre[class*='language-typescript'] {
   color: #e06c75;
+}
+
+code[class*='language-typescript'] .token.builtin,
+pre[class*='language-typescript'] .token.builtin {
+  color: #e5c07b
 }
 
 pre[class*='language-'] {
@@ -175,6 +182,11 @@ code[class*='language-'] ::selection {
 .token.regex {
   color: #fd971f;
 } */
+
+[class='language-shell'] .token.parameter {
+  color: #808080;
+}
+
 .token.bold,
 .token.important {
   font-weight: 700;

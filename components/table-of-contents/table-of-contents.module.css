@@ -1,17 +1,17 @@
 
 
 .toc {
-
+  font-size: 14px;
 }
 
 .toc li {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
 }
 
 .toc li ul li {
-  margin: 0 0 4px 6px;
+  margin: 0 0 4px 12px;
 }
 
 .toc li ul li ul li {
-  margin: 0 0 4px 6px;
+  margin: 0 0 4px 12px;
 }
