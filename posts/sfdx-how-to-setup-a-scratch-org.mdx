@@ -1,0 +1,207 @@
+---
+title: 'SFDX: How to setup a Scratch Org'
+date: 2019-12-09
+color: '#cd1900'
+excerpt: How to setup a scratch org using sfdx (feat. some extra commands)
+tags: ['salesforce', 'javascript']
+---
+
+How the heck do I set up a scratch org using sfdx? Well, you're in the right place.
+
+Firstly, you will need to have SFDX ([Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli)) installed and VS Code. You will also need your own Salesforce DevHub instance setup (need a hand with setting up your dev hub? check out this [trailhead unit](https://trailhead.salesforce.com/en/content/learn/modules/sfdx_app_dev/sfdx_app_dev_setup_dx).
+
+## Create a Salesforce DX Project
+
+The second step is to create a (SF)DX project.
+
+```shell
+sfdx force:project:create -n YOUR_PROJECT_NAME
+```
+
+## Auth your DevHub
+
+Next, we need to connect your DevHub with your new project
+
+```shell
+sfdx force:auth:web:login -d -a ALIAS_FOR_YOUR_DEV_HUB -r https://test.salesforce.com
+```
+
+- `-d` sets this as the default Dev Hub.
+- `-a` sets this alias for the org.
+- `-r` sets the login URL for the org.
+
+> If you have already auth'd, set your default username using `sfdx force:config:set defaultdevhubusername=lukesfakeemail@force.com`
+
+## Login To Sandboxes
+
+In addition to DebHubs, we can also connect to standard salesforce Sandboxes. This can be handy when it comes to pulling components into your scratch org
+
+```shell
+sfdx force:auth:web:login -r https://test.salesforce.com -a ALIAS_FOR_YOUR_SANDBOX
+```
+
+> Remember, don't use the `-d` flag. If you do, the CLI thinks the org is your Dev Hub, and then you'll see an error when you try to create a scratch org.
+
+If `force:auth:web:login` isnt working, use `sfdx force:auth:device:login -r https://test.salesforce.com -a YOUR_ORG_ALIAS` instead.
+
+## Rename (add) Alias
+
+```shell
+sfdx force:alias:set NEW_ALIAS_FOR_YOUR_SANDBOX=current@sandbox.user.com
+sfdx force:alias:set OLD_ALIAS_FOR_YOUR_SANDBOX=
+```
+
+## Logout of Sandboxes
+
+logout/remove the sandbox from the `sfdx force:org:list`
+
+```shell
+sfdx force:auth:logout -u ALIAS_FOR_YOUR_SANDBOX
+```
+
+## Create your scratch org
+
+Now for the fun part, creating your scratch org.
+
+> if you want to set the scratch org name, or adjust other config options, edit the `./config/project-scratch-def.json` file before progressing
+
+```shell
+sfdx force:org:create -s -v ALIAS_OF_YOUR_DEBHUB -f config/project-scratch-def.json -a ALIAS_FOR_SCRATCH_ORG -d 30 -w 10
+```
+
+- `-v` optional param to choose your DevHub (not needed if you have a default DevHub set)
+- `-s` sets this as the default sratch org
+- `-f` sets the location for the config file (to build the org)
+- `-a` sets the alias for the scratch org
+- `-d` sets the expiry to 30 days
+- `-w` sets the wait time to 10mins
+
+> If you already scratch'd an org `sfdx force:config:set defaultusername=lukesfakeemail@force.com`
+
+## View Scratch Org Config/Details
+
+```shell
+sfdx force:org:display -u SCRATCH_ORG_ALIAS
+```
+
+## Generate Password Scratch Org
+
+```shell
+sfdx force:user:password:generate -u SCRATCH_ORG_ALIAS
+```
+
+## Delete Scratch Org
+
+```shell
+sfdx force:org:delete -u SCRATCH_ORG_ALIAS
+```
+
+## Assign Permission Set
+
+Before you can start pushing code, we have to set up some permission sets to allow us.
+
+```shell
+sfdx force:user:permset:assign -n NAME_OF_PERMISSION_SET
+```
+
+> most likely named `SalesConsoleUser` on default scratch orgs
+
+## Fetch all Metadata from an Org (Metadata API)
+
+> NOTE: we are using the sfdx-ext plugin which can be found [here](https://github.com/brianedwardsaunders/sfdx-ext)
+
+Fetch the Metadata
+
+```shell
+sfdx ext:mdapi:retrieve -b -i -n -h -f -u SOURCE_ORG_NAME
+```
+
+Convert the source to Metadata API (instead of Source API)
+
+```shell
+sfdx ext:mdapi:convert --sourcedirectory src --targetdirectory ./
+```
+
+Clean up the Source API folder
+
+```shell
+rm -rf src
+```
+
+> If any of this falls over, you may need to either update the `sfdx-ext` plugin or remove un-parsable files.
+
+## Deploy code back to DevHub
+
+Deploy all of type
+
+```shell
+sfdx force:source:deploy -m ApexPage, ApexClasses, LightningComponentBundle -u ALIAS_FOR_YOUR_DEV_HUB
+```
+
+Deploy specific component by path
+
+```shell
+sfdx force:source:deploy -p force-app/main/default/lwc/SINGLE_COMPONENT_NAME -u ALIAS_FOR_YOUR_DEV_HUB
+```
+
+## Fetch / Pull Data
+
+Retrieve All ApexClasses, ApexPages, LWC's
+
+```shell
+sfdx force:source:retrieve -m ApexClass, ApexPage, LightningComponentBundle -u ALIAS_FOR_YOUR_DEV_HUB
+```
+
+[Metadata Ref](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_types_list.htm)
+
+## Create / Import Data
+
+> data can be retrieved from a sandbox using `sfdx force:source:retrieve -m CustomObject -u SANDBOX_SOURCE_ORG`
+
+## Create Data
+
+Specify the Object type and the fields 'n values
+
+```shell
+sfdx force:data:record:create -s Account -v "Name='Marriott Marquis' BillingStreet='780 Mission St' BillingCity='San Francisco' BillingState='CA' BillingPostalCode='94103' Phone='(415) 896-1600' Website='www.marriott.com'"
+```
+
+#### Export Data
+
+Using SQL to JSON data
+
+```shell
+sfdx force:data:tree:export -q "SELECT Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, Phone, Website FROM Account WHERE BillingStreet != NULL AND BillingCity != NULL and BillingState != NULL\" -d ./data
+```
+
+#### Import Data
+
+```shell
+sfdx force:data:tree:import --sobjecttreefiles data/Account.json
+```
+
+## Create an Apex Class
+
+```shell
+sfdx force:apex:class:create -n YourControllerName -d force-app/main/default/classes
+```
+
+## `config/project-scratch-def.json`
+
+Disable Lightning Experience caching
+
+```json
+"settings": {
+  "orgPreferenceSettings": {
+    "s1EncryptedStoragePref2": false
+  }
+}
+```
+
+> Disabling secure and persistent browser caching has a significant negative performance impact on Lightning Experience. Always enable the setting in production orgs.
+
+## Useful Commands
+
+- See config options `sfdx force:config:set -h`
+- See all commands `sfdx force:doc:commands:list`
+- Refresh SObject cache for VS Code intellisense `sfdx sobject definitions refresh -u SCRATCH_ORG_USERNAME`
