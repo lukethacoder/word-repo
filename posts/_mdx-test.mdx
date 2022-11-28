@@ -1,0 +1,250 @@
+---
+title: mdx-test
+date: 2022-11-20
+color: '#cd7b00'
+excerpt: testing our MDX + FE Styling
+tags: ['test', 'frontend']
+draft: true
+---
+
+## Headings & Copy
+
+# First Header h1
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos.
+
+## Second header h2
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+### Third header h3
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+#### Fourth header h4
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+
+##### Fifth header h5
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+###### Sixth header h6
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos.
+
+---
+
+## Code Snippet
+
+```javascript
+import { CodeBlock } from '../components'
+
+export const meta = {
+  title: 'hello world',
+  date: '2020-10-09',
+  excerpt: 'hello-world excerpt',
+  tags: ['salesforce', 'javascript'],
+}
+
+const methodName = (props) => {
+  console.log('props ', props)
+}
+
+function methodNameFn(props) {
+  console.log('props ', props)
+}
+```
+
+```typescript
+import { CodeBlock } from '../components'
+
+export const meta: { [key: string]: string | string[] } = {
+  title: 'hello world',
+  date: '2020-10-09',
+  excerpt: 'hello-world excerpt',
+  tags: ['salesforce', 'javascript'],
+}
+
+const methodName = async (props: string[]) => {
+  console.log('props ', props)
+}
+
+interface IMethodProps {
+  key: string
+  value?: string | number
+}
+
+function methodNameFn(props: IMethodProps) {
+  console.log('props ', props)
+}
+```
+
+```rust
+#[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq)]
+pub struct Bucket {
+    pub buckets: Vec<BucketEntry>,
+    pub sum_other_doc_count: i32,
+    pub doc_count_error_upper_bound: i32,
+}
+
+pub fn is_existing_by_path(
+    track_path: &str,
+    searcher: &LeasedItem<Searcher>,
+    query_parser: &QueryParser,
+) -> bool {
+    let path_query = format!("\"{}\"", &track_path);
+    let query = query_parser.parse_query(path_query.as_str()).unwrap();
+    let count = searcher.search(&query, &Count).unwrap();
+
+    count > 0
+
+}
+
+let aggregate_request: Aggregations = vec![(
+    "artist_bucket".to_string(),
+    Aggregation::Bucket(BucketAggregation {
+        bucket_agg: BucketAggregationType::Terms(TermsAggregation {
+            field: "artist".to_string(),
+            size: Some(1000),
+            ..Default::default()
+        }),
+        sub_aggregation: Default::default(),
+    }),
+)]
+.into_iter()
+.collect();
+```
+
+```apex
+public inherited sharing class AccountSelector extends ApplicationSObjectSelector implements IAccountSelector {
+  public List<Account> selectById(Set<Id> idSet) {
+    if (idSet.isEmpty()) {
+      return new List<Account>();
+    }
+
+    fflib_QueryFactory qf = getQueryFactory();
+    qf.selectFields(getSObjectFieldListWithRelatedFields());
+    qf.setCondition('Id IN :idSet');
+    checkWithSubSelect(qf);
+
+    return Database.query(qf.toSOQL());
+  }
+
+  public Account selectById(Id recordId) {
+    List<Account> recordList = selectById(new Set<Id>{ recordId });
+    return recordList.isEmpty() ? null : recordList[0];
+  }
+}
+```
+
+```html
+<body>
+  <main id="main-content">
+    <header>
+      <h1 class="text-xl font-mono">Test HTML</h1>
+    </header>
+  </main>
+</body>
+```
+
+```css
+code[class*='language-'],
+pre[class*='language-'] {
+  color: #e06c75;
+  background: 0 0;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
+    monospace;
+  font-size: 1em;
+  font-weight: 500;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+```
+
+```shell
+git push --set-upstream origin bug/fixing-all-the-code
+sf env open -e luke-dev
+sfdx force:source:retrieve -m ApexClass:AccountSelector -u luke-dev
+```
+
+---
+
+## Images
+
+![Figure Example](https://images.unsplash.com/photo-1542676032-e505f4fe02a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80)
+
+---
+
+## Links
+
+[Sample text link](#) [Sample button link](#)
+
+---
+
+## Lists
+
+### Unordered list
+
+- Orange
+- Apple
+- Rhubarb
+- Rasberry
+- Blueberry
+- Cherry
+
+### Ordered list
+
+1. First
+2. Second
+3. Third
+4. Fourth
+5. Fifth
+6. Sixth
+
+## Tables
+
+| Column 1 Header | Column 2 Header | Column 3 Header |
+| --------------- | --------------- | --------------- |
+| Row 1 Column 1  | Row 1 Column 2  | Row 1 Column 3  |
+| Row 2 Column 1  | Row 2 Column 2  | Row 2 Column 3  |
+| Row 3 Column 1  | Row 3 Column 2  | Row 3 Column 3  |
+
+---
+
+## An Example Article
+
+## Title
+
+Lorem ipsum dolor sit amet, **consectetur adipisicing elit**, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud*exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat* . Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+> This is a GREAT pull quote.
+>
+> [\- Author](#)
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+---
+
+## Footer
+
+- [Home](#)
+- [Contact](#)
+- [Jobs](#)
+- [Twitter](http://twitter.com ' on Twitter')
+- [Instagram](http://instagram.com ' on Instagram')
+- [Github](http://github.com ' on Github')

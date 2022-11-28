@@ -41,7 +41,7 @@ export const PostCard = ({
       <Link className={style.link} href={`/posts/${slug}`}></Link>
       <h4 className='text-xl underline mb-1'>{title}</h4>
       {excerpt && (
-        <p className='text-md font-normal font-sans'>
+        <p className={`${style.excerpt} text-md font-normal font-sans`}>
           <span className='hover-snakeline'>{excerpt}</span>
         </p>
       )}
