@@ -38,7 +38,7 @@ export const PostCard = ({
         } as React.CSSProperties
       }
     >
-      <Link className={style.link} href={`/posts/${slug}`}></Link>
+      <Link className={style.link} href={`/article/${slug}`}></Link>
       <h4 className='text-xl underline mb-1'>{title}</h4>
       {excerpt && (
         <p className={`${style.excerpt} text-md font-normal font-sans`}>

@@ -20,7 +20,7 @@ const components = {
   Header: Header,
 }
 
-export default function PostPage({
+export default function ArticlePage({
   source,
   frontMatter,
   toc,
@@ -34,7 +34,7 @@ export default function PostPage({
         <title>{frontMatter.title as string} | word_repo - luke secomb</title>
         <meta
           property='og:image'
-          content={`/api/post-og?title=${encodeURIComponent(
+          content={`/api/article-og?title=${encodeURIComponent(
             frontMatter.title
           )}&color=${encodeURIComponent(
             frontMatter.color
