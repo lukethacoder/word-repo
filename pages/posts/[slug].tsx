@@ -11,13 +11,12 @@ import remarkSlug from 'remark-slug'
 import remarkBlockQuotesExtended from 'remark-blockquotes-extended'
 import rehypeExternalLinks from 'rehype-external-links'
 
-import { getTocFromAst, Post } from '../../lib'
+import { getTocFromAst, Post } from '../../lib-ssr'
 import { Header, Layout, Pill, TableOfContents } from '../../components'
 
 const components = {
   CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
   pre: dynamic(() => import('../../components/code-block/dynamic')),
-  Head,
   Header: Header,
 }
 
@@ -30,58 +29,78 @@ export default function PostPage({
   const showToc = toc.length > 1
 
   return (
-    <Layout bannerBackgroundColor={frontMatter.color}>
-      <div className='page-header'>
-        <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
-          <h1 className='text-4xl'>{frontMatter.title}</h1>
-          <span>
-            <time dateTime={frontMatter.date}>{frontMatter.dateFormatted}</time>
-            {` -> `}
-            <span>{frontMatter.readingTime.text}</span>
-          </span>
-          <ul className='mt-4 flex flex-wrap gap-2'>
-            {frontMatter.tags &&
-              frontMatter.tags.map((item: string) => (
-                <li key={item}>
-                  <Pill name={item}>{item}</Pill>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </div>
-      <div
-        className='post-page grid gap-4 max-width mx-auto px-4 mb-8'
-        style={
-          { '--theme-post-feature': frontMatter.color } as React.CSSProperties
-        }
-      >
-        <main
-          className={`post-main flex flex-col gap-4 col-span-12 ${
-            showToc ? `lg:col-span-8` : 'lg:col-span-9'
-          }`}
-        >
-          <div className='content prose prose-invert prose-headings:font-mono max-w-none prose-code:font-normal'>
-            <MDXRemote {...source} components={components} />
+    <>
+      <Head>
+        <title>{frontMatter.title as string} | word_repo - luke secomb</title>
+        <meta
+          property='og:image'
+          content={`/api/post-og?title=${encodeURIComponent(
+            frontMatter.title
+          )}&color=${encodeURIComponent(
+            frontMatter.color
+          )}&reading-time=${encodeURIComponent(
+            frontMatter.readingTime.text
+          )}&date=${encodeURIComponent(frontMatter.dateFormatted)}`}
+        />
+      </Head>
+
+      <Layout bannerBackgroundColor={frontMatter.color}>
+        <div className='page-header'>
+          <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
+            <h1 className='text-4xl'>{frontMatter.title}</h1>
+            <span>
+              <time dateTime={frontMatter.date}>
+                {frontMatter.dateFormatted}
+              </time>
+              {` -> `}
+              <span>{frontMatter.readingTime.text}</span>
+            </span>
+            <ul className='mt-4 flex flex-wrap gap-2'>
+              {frontMatter.tags &&
+                frontMatter.tags.map((item: string) => (
+                  <li key={item}>
+                    <Pill name={item}>{item}</Pill>
+                  </li>
+                ))}
+            </ul>
           </div>
-          {/* <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
+        </div>
+        <div
+          className='post-page grid gap-4 max-width mx-auto px-4 mb-8'
+          style={
+            { '--theme-post-feature': frontMatter.color } as React.CSSProperties
+          }
+        >
+          <main
+            className={`post-main flex flex-col gap-4 col-span-12 ${
+              showToc ? `lg:col-span-8` : 'lg:col-span-9'
+            }`}
+          >
+            <div className='content'>
+              <div className='prose prose-invert prose-headings:font-mono max-w-none prose-code:font-normal'>
+                <MDXRemote {...source} components={components} />
+              </div>
+            </div>
+            {/* <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
             <h3>Commentz</h3>
           </div> */}
-        </main>
-        <aside className={`col-span-12 ${showToc ? 'lg:col-span-4' : ''}`}>
-          {toc.length > 1 && (
-            <div
-              className='sticky top-[16px] border-2 border-solid p-4'
-              style={{
-                borderColor: 'var(--theme-border-default)',
-                backgroundColor: 'var(--theme-bg-subtle)',
-              }}
-            >
-              <TableOfContents items={toc}></TableOfContents>
-            </div>
-          )}
-        </aside>
-      </div>
-    </Layout>
+          </main>
+          <aside className={`col-span-12 ${showToc ? 'lg:col-span-4' : ''}`}>
+            {toc.length > 1 && (
+              <div
+                className='sticky top-[16px] border-2 border-solid p-4'
+                style={{
+                  borderColor: 'var(--theme-border-default)',
+                  backgroundColor: 'var(--theme-bg-subtle)',
+                }}
+              >
+                <TableOfContents items={toc}></TableOfContents>
+              </div>
+            )}
+          </aside>
+        </div>
+      </Layout>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { TocEntry } from '../../lib'
+import { TocEntry } from '../../lib-ssr'
 import style from './table-of-contents.module.css'
 
 interface ITableOfContents {
@@ -17,7 +17,7 @@ const TocItem = ({ data }: { data: TocEntry }) => {
       {data.children && (
         <ul>
           {data.children.map((child: TocEntry) => (
-            <TocItem key={data.id} data={child} />
+            <TocItem key={`${data.id}_${child.id}`} data={child} />
           ))}
         </ul>
       )}

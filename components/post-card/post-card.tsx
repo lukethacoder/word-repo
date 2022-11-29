@@ -33,8 +33,8 @@ export const PostCard = ({
       className={`p-4 relative flex flex-col ${style.article}`}
       style={
         {
-          '--card-border-color': borderColor,
-          '--card-bg': backgroundColor,
+          ...(borderColor ? { '--card-border-color': borderColor } : {}),
+          ...(backgroundColor ? { '--card-bg': backgroundColor } : {}),
         } as React.CSSProperties
       }
     >

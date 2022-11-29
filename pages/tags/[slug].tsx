@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next/types'
 
-import { Tag, Post } from '../../lib'
+import { Tag, Post } from '../../lib-ssr'
 import { Layout, PostCard } from '../../components'
 import { IPost } from '../../types/global'
 

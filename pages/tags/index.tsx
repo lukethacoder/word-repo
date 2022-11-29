@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next/types'
 
-import { Tag } from '../../lib'
+import { Tag } from '../../lib-ssr'
 import { Layout, Pill } from '../../components'
 
 export default function TagsPage({
@@ -15,7 +15,7 @@ export default function TagsPage({
       </div>
 
       <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-9'>
+        <div className='col-span-12 lg:col-span-9'>
           <article className='flex flex-wrap gap-4'>
             {tags.map(([item, value]) => (
               <Pill key={item} name={item}>
@@ -25,7 +25,7 @@ export default function TagsPage({
             ))}
           </article>
         </div>
-        <aside className='col-span-3'>
+        {/* <aside className='col-span-3'>
           <div
             className='border-2 border-solid p-4'
             style={{
@@ -33,9 +33,9 @@ export default function TagsPage({
               backgroundColor: 'var(--theme-bg-subtle)',
             }}
           >
-            stuffs
+            future enhancement goes here
           </div>
-        </aside>
+        </aside> */}
       </div>
     </Layout>
   )
