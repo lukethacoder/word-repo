@@ -144,6 +144,56 @@ article:hover > p > .hover-snakeline {
   margin: 0;
 }
 
+.prose ul li label {
+  position: relative;
+}
+
+.prose ul li label input[type=checkbox] {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.prose ul li label input[type=checkbox]:focus ~ .checkbox {
+  outline: 2px solid var(--theme-fg-default);
+  outline-offset: 2px;
+}
+.prose ul li label input[type=checkbox]:checked ~ .checkbox {
+  background-color: var(--theme-fg-default);
+}
+.prose ul li label input[type=checkbox]:checked ~ .checkbox::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
+.prose ul li label .checkbox {
+  height: 16px;
+  width: 16px;
+  border-radius: 2px;
+  background-color: transparent;
+  border: 2px solid var(--theme-border-default);
+  display: inline-block;
+  margin: 0 8px 0 0;
+  position: relative;
+}
+.prose ul li label .checkbox::after {
+  content: '';
+  position: absolute;
+  transform: rotate(0deg) scale(1);
+  opacity: 0;
+  left: 4px;
+  top: 0;
+  width: 5px;
+  height: 10px;
+  border: solid var(--theme-bg-default);
+  border-width: 0 2px 2px 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
 .page-banner-bg {
   width: 100%;
   height: 580px;
