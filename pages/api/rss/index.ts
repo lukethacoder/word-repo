@@ -79,7 +79,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       <title>${metadata.title}</title>
       <description>${metadata.description}</description>
       <link>${metadata.link}</link>
-      <lastBuildDate>${feed[0].data.date}</lastBuildDate>
+      <lastBuildDate>${(feed as IPost[])[0].data.date}</lastBuildDate>
       ${postItems}
       </channel>
       </rss>`
