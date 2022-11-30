@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next/types'
 import { Tag, Post } from '../../lib-ssr'
 import { Layout, PostCard } from '../../components'
 import { IPost } from '../../types/global'
+import Head from 'next/head'
 
 export default function TagPage({
   slug,
@@ -12,7 +13,7 @@ export default function TagPage({
   posts: IPost[]
 }) {
   return (
-    <Layout>
+    <Layout title={`tag: ${slug} | word_repo`}>
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
           <h1 className='text-3xl'>{slug}</h1>

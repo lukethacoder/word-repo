@@ -2,12 +2,13 @@ import { InferGetStaticPropsType } from 'next/types'
 
 import { Tag } from '../../lib-ssr'
 import { Layout, Pill } from '../../components'
+import Head from 'next/head'
 
 export default function TagsPage({
   tags,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Layout>
+    <Layout title='tags | word_repo'>
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
           <h1 className='text-3xl'>Tags</h1>

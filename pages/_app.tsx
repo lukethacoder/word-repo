@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import { Fira_Code, Roboto } from '@next/font/google'
 
 import '../styles/globals.css'
@@ -28,6 +29,11 @@ export default function App({ Component, pageProps }: AppProps) {
       {process.env.NEXT_PUBLIC_CLARITY_CODE && (
         <Clarity.Script clarityKey={process.env.NEXT_PUBLIC_CLARITY_CODE} />
       )}
+
+      <Head>
+        <link rel='icon' href='/favicon.ico' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+      </Head>
 
       <Component
         className={`${firaCode.className} ${roboto.className}`}

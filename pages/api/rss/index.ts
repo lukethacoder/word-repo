@@ -27,7 +27,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const postItems = feed
       .map((page: IPost): string => {
-        console.log(`page `, page)
         const {
           title,
           excerpt,

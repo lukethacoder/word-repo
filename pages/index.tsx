@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { InferGetStaticPropsType } from 'next/types'
 import { Layout, PostCard } from '../components'
 
@@ -9,16 +8,11 @@ export default function Home({
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Layout bannerBackgroundColor='var(--theme-bg-dark)'>
-      <Head>
-        <title>word_repo - luke secomb</title>
-        <meta
-          name='description'
-          content='Home to a collection of posts covering anything technical and/or development related; JavaScript to Rust, React to Salesforce, and anything in between.'
-        />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
+    <Layout
+      title='word_repo | luke secomb'
+      description='Home to a collection of posts covering anything technical and/or development related; JavaScript to Rust, React to Salesforce, and anything in between.'
+      bannerBackgroundColor='var(--theme-bg-dark)'
+    >
       <div className='page-header max-width mx-auto px-4'>
         <div className='h-full flex flex-col justify-end pb-12'>
           <h1 className='text-3xl'>welcome to my word repo.</h1>
