@@ -10,11 +10,12 @@ import remarkSlug from 'remark-slug'
 import remarkBlockQuotesExtended from 'remark-blockquotes-extended'
 import rehypeExternalLinks from 'rehype-external-links'
 
-import { getTocFromAst, Post } from '../../lib-ssr'
+import { getTocFromAst, remarkCheckboxLists, Post } from '../../lib-ssr'
 import { Header, Layout, Pill, TableOfContents } from '../../components'
 
 const components = {
   CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
+  // input: dynamic(() => import('../../components/input/dynamic')),
   pre: dynamic(() => import('../../components/code-block/dynamic')),
   Header: Header,
 }
@@ -111,6 +112,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           remarkPrism,
           remarkMdxToc,
           remarkBlockQuotesExtended,
+          remarkCheckboxLists,
           () => (ast) => {
             // get the TOC data from the remarkMdxToc
             toc = getTocFromAst(ast)
