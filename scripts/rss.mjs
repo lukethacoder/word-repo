@@ -46,7 +46,6 @@ const generateRss = async () => {
         data: {
           ...data,
           slug,
-          draft: content.draft || false,
           date: _date,
           readingTime: readingTime(content),
           dateFormatted: _date ? formatDate(_date) : '',
@@ -57,6 +56,18 @@ const generateRss = async () => {
     })
     .filter((post) => post.data.draft !== true && post.data.date < now)
     .sort((a, b) => (a.data.date < b.data.date ? 1 : -1))
+  // .map(item => {
+
+  //   const content = item.data.content
+
+  //   return {
+  //     ...item,
+  //     data: {
+  //       ...data,
+  //       content
+  //     }
+  //   }
+  // })
 
   const SITEMAP_DIR = path.join(process.cwd(), 'pages')
   console.log(`Saving ${posts.length} posts`)
