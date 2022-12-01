@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { InferGetStaticPropsType, GetStaticProps } from 'next/types'
 import Giscus from '@giscus/react'
+import Error from 'next/error'
 
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -27,10 +28,14 @@ const components = {
 }
 
 export default function ArticlePage({
+  error,
   source,
   frontMatter,
   toc,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  if (error) {
+    return <Error statusCode={error} />
+  }
   // if only one heading, don't bother showing the TOC
   const showToc = (toc as TocEntry[]).length > 1
 
