@@ -10,7 +10,7 @@ interface IPill {
 export const Pill = ({ children, name, className }: IPill) => {
   return (
     <Link
-      className={`${className ? className : ''} py-1 px-2 text-xs ${
+      className={`${className ? className : ''} font-mono py-1 px-2 text-xs ${
         style.pill
       }`}
       href={`/tags/${name}`}

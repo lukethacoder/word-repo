@@ -39,7 +39,7 @@ export const PostCard = ({
       }
     >
       <Link className={style.link} href={`/article/${slug}`}></Link>
-      <h4 className='text-xl underline mb-1'>{title}</h4>
+      <h4 className='font-mono text-xl underline mb-1'>{title}</h4>
       {excerpt && (
         <p className={`${style.excerpt} text-md font-normal font-sans`}>
           <span className='hover-snakeline'>{excerpt}</span>
@@ -59,7 +59,9 @@ export const PostCard = ({
               </li>
             ))}
         </ul>
-        <div className={`md:mb-1 whitespace-nowrap ${style.metadata}`}>
+        <div
+          className={`font-mono md:mb-1 whitespace-nowrap ${style.metadata}`}
+        >
           <time dateTime={date.raw}>{date.dateFormatted}</time>
           {` -> `}
           <p>{readingTime && readingTime.text}</p>
