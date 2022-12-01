@@ -35,18 +35,34 @@ export const Layout = ({
       <Head>
         <title>{title}</title>
         <meta name='og:title' content={title} />
+        <meta name='og:site_name' content='word_repo | luke secomb' />
+        <meta name='twitter:title' content={title} />
+        <meta name='twitter:site' content='@lu_ke____' />
+        <meta name='twitter:creator' content='@lu_ke____' />
         <meta name='og:locale' content='en_US' />
         <meta
           name='og:url'
           content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
         />
+        <meta
+          name='canonical'
+          content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
+        />
         <meta name='theme-color' content={metaColor ? metaColor : '#000000'} />
         <meta name='og:type' content={ogType ? ogType : 'website'} />
-        {description && <meta name='description' content={description} />}
-        {description && <meta name='og:description' content={description} />}
+        {description && (
+          <>
+            <meta name='description' content={description} />
+            <meta name='og:description' content={description} />
+            <meta name='twitter:description' content={description} />
+          </>
+        )}
         {ogImage && (
           <>
             <meta property='og:image' content={ogImage} />
+            <meta property='twitter:image:src' content={ogImage} />
+            <meta property='twitter:card' content='summary_large_image' />
+            <meta property='twitter:widgets:new-embed-design' content='on' />
             <meta property='og:image:width' content='1200' />
             <meta property='og:image:height' content='630' />
             <meta
