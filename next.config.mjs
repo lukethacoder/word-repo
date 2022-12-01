@@ -6,9 +6,13 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     appDir: false,
-    // nftTracing: true,
-    // outputFileTracing: true,
   },
+  rewrites: async () => [
+    {
+      source: '/rss.xml',
+      destination: '/api/rss',
+    },
+  ],
 }
 
 export default nextConfig
