@@ -8,7 +8,8 @@ import { IMdxMetadata, IPost } from '../types/global'
 import { getFiles } from '../utils'
 
 // Finding directory named "posts" from the current working directory of Node.
-const POSTS_PATH = path.join(process.cwd(), 'posts')
+const ROOT_PATH = process.cwd()
+const POSTS_PATH = path.join(ROOT_PATH, 'posts')
 
 const MATTER_CONFIG: any = {
   engines: {

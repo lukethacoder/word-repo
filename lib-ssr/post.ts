@@ -46,8 +46,14 @@ const getAllSlugs = async (): Promise<{ params: { slug: string } }[]> =>
  * Fetch an individual post by slug
  * @param {String} - post slug
  */
-const getBySlug = async (slug: string): Promise<IPost> =>
-  formatMatter(slug, fs.readFileSync(getPathFromSlug(slug), 'utf8'))
+const getBySlug = async (slug: string): Promise<IPost | null> => {
+  const postPath = getPathFromSlug(slug)
+  if (!fs.existsSync(postPath)) {
+    return null
+  }
+
+  return formatMatter(slug, fs.readFileSync(getPathFromSlug(slug), 'utf8'))
+}
 
 /**
  * Fetch all posts given a tag

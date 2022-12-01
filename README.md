@@ -125,7 +125,7 @@ Project Link: [https://github.com/lukethacoder/word-repo](https://github.com/luk
 [issues-shield]: https://img.shields.io/github/issues/lukethacoder/word-repo.svg?style=for-the-badge
 [issues-url]: https://github.com/lukethacoder/word-repo/issues
 [license-shield]: https://img.shields.io/github/license/lukethacoder/word-repo.svg?style=for-the-badge
-[license-url]: https://github.com/lukethacoder/word-repo/blob/master/LICENSE.txt
+[license-url]: https://github.com/lukethacoder/word-repo/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/luke-secomb/
 [product-screenshot]: docs/screenshot.png

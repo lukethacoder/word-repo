@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { InferGetStaticPropsType, GetStaticProps } from 'next/types'
+import Giscus from '@giscus/react'
 
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -76,9 +77,30 @@ export default function ArticlePage({
               <MDXRemote {...source} components={components} />
             </div>
           </div>
-          {/* <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
-            <h3>Commentz</h3>
-          </div> */}
+          {process.env.NEXT_PUBLIC_GITHUB_REPO && (
+            <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
+              <Giscus
+                id='comments'
+                repo={
+                  process.env.NEXT_PUBLIC_GITHUB_REPO as `${string}/${string}`
+                }
+                repoId={process.env.NEXT_PUBLIC_GITHUB_REPO_ID as string}
+                category={process.env.NEXT_PUBLIC_GITHUB_CATEGORY as string}
+                categoryId={
+                  process.env.NEXT_PUBLIC_GITHUB_CATEGORY_ID as string
+                }
+                mapping='specific'
+                strict='0'
+                reactions-enabled='1'
+                emit-metadata='0'
+                input-position='bottom'
+                theme='dark'
+                lang='en'
+                loading='lazy'
+                reactionsEnabled='1'
+              />
+            </div>
+          )}
         </main>
         <aside className={`col-span-12 ${showToc ? 'lg:col-span-4' : ''}`}>
           {toc.length > 1 && (
@@ -101,6 +123,10 @@ export default function ArticlePage({
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (params?.slug) {
     const postData = await Post.getBySlug(params.slug as string)
+    if (!postData) {
+      return { props: { error: '401' } }
+    }
+
     const { content, data } = postData
 
     let toc = {}
