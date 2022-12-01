@@ -1,22 +1,32 @@
 import Head from 'next/head'
+import { ReactNode } from 'react'
+
 import { Footer } from '../footer'
 import { Header } from '../header'
 import { SkipTo } from '../skip-link'
 
 interface ILayout {
   children: React.ReactNode
+  urlPath: string
   title?: string
   description?: string
   ogImage?: string
+  ogType?: string
+  metaColor?: string
+  extraHeadTags?: ReactNode
   backgroundColor?: string
   bannerBackgroundColor?: string
 }
 
 export const Layout = ({
   children,
+  urlPath,
   title = 'word_repo | luke secomb',
   description,
   ogImage,
+  ogType,
+  metaColor,
+  extraHeadTags,
   backgroundColor = 'var(--theme-bg-default)',
   bannerBackgroundColor = 'var(--theme-bg-dark)',
 }: ILayout) => {
@@ -24,8 +34,28 @@ export const Layout = ({
     <>
       <Head>
         <title>{title}</title>
+        <meta name='og:title' content={title} />
+        <meta name='og:locale' content='en_US' />
+        <meta
+          name='og:url'
+          content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
+        />
+        <meta name='theme-color' content={metaColor ? metaColor : '#000000'} />
+        <meta name='og:type' content={ogType ? ogType : 'website'} />
         {description && <meta name='description' content={description} />}
-        {ogImage && <meta property='og:image' content={ogImage} />}
+        {description && <meta name='og:description' content={description} />}
+        {ogImage && (
+          <>
+            <meta property='og:image' content={ogImage} />
+            <meta property='og:image:width' content='1200' />
+            <meta property='og:image:height' content='630' />
+            <meta
+              property='og:image:alt'
+              content='Auto generated OG image featuring the page title and posted date'
+            />
+          </>
+        )}
+        {extraHeadTags && extraHeadTags}
       </Head>
       <div className='main' style={{ backgroundColor }}>
         <SkipTo />

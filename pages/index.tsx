@@ -10,6 +10,7 @@ export default function Home({
   return (
     <Layout
       title='word_repo | luke secomb'
+      urlPath=''
       description='Home to a collection of posts covering anything technical and/or development related; JavaScript to Rust, React to Salesforce, and anything in between.'
       bannerBackgroundColor='var(--theme-bg-dark)'
     >

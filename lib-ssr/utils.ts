@@ -82,8 +82,6 @@ export const getPostPaths = async (): Promise<string[]> => {
 }
 
 export const getSlugFromPath = (filePath: string): string => {
-  console.log('extract path from ', filePath, os.type())
-
   if (os.type() === 'Windows_NT') {
     return /[^\\]*$/.exec(filePath)?.[0]?.replace('.mdx', '') || ''
   }

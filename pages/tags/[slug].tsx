@@ -13,7 +13,7 @@ export default function TagPage({
   posts: IPost[]
 }) {
   return (
-    <Layout title={`tag: ${slug} | word_repo`}>
+    <Layout title={`tag: ${slug} | word_repo`} urlPath={`tags/${slug}`}>
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
           <h1 className='text-3xl'>{slug}</h1>

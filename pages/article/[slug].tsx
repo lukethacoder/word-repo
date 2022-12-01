@@ -52,6 +52,29 @@ export default function ArticlePage({
       title={`${frontMatter.title as string} | word_repo`}
       bannerBackgroundColor={frontMatter.color}
       ogImage={ogImage}
+      ogType='article'
+      urlPath={`article/${frontMatter.slug}`}
+      metaColor={frontMatter.color}
+      extraHeadTags={
+        <>
+          <meta
+            name='article:published_time'
+            content={new Date(frontMatter.date).toISOString()}
+          />
+          {frontMatter.editedDate && (
+            <meta
+              name='article:modified_time'
+              content={new Date(frontMatter.editedDate).toISOString()}
+            />
+          )}
+          {frontMatter.tags && (
+            <meta
+              name='article:article:tag'
+              content={frontMatter.tags.join(',')}
+            />
+          )}
+        </>
+      }
     >
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>

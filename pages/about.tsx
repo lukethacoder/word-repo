@@ -26,6 +26,7 @@ export default function About() {
   return (
     <Layout
       title='about | word_repo'
+      urlPath='about'
       description='Hi, I am Luke, Full Stack Developer currently working at Deloitte Digital as a Technical Specialist.'
       bannerBackgroundColor='var(--theme-bg-dark)'
     >

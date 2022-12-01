@@ -8,7 +8,7 @@ export default function TagsPage({
   tags,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Layout title='tags | word_repo'>
+    <Layout title='tags | word_repo' urlPath='tags'>
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
           <h1 className='text-3xl'>Tags</h1>
