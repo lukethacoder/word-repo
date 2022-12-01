@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic'
 import { InferGetStaticPropsType, GetStaticProps } from 'next/types'
-import Giscus from '@giscus/react'
 import Error from 'next/error'
 
 import { MDXRemote } from 'next-mdx-remote'
@@ -18,11 +17,16 @@ import {
   Post,
   TocEntry,
 } from '../../lib-ssr'
-import { Header, Layout, Pill, TableOfContents } from '../../components'
+import {
+  Comments,
+  Header,
+  Layout,
+  Pill,
+  TableOfContents,
+} from '../../components'
 
 const components = {
   CodeBlock: dynamic(() => import('../../components/code-block/dynamic')),
-  // input: dynamic(() => import('../../components/input/dynamic')),
   pre: dynamic(() => import('../../components/code-block/dynamic')),
   Header: Header,
 }
@@ -112,26 +116,7 @@ export default function ArticlePage({
           </div>
           {process.env.NEXT_PUBLIC_GITHUB_REPO && (
             <div className='comments prose prose-invert prose-headings:font-mono max-w-none'>
-              <Giscus
-                id='comments'
-                repo={
-                  process.env.NEXT_PUBLIC_GITHUB_REPO as `${string}/${string}`
-                }
-                repoId={process.env.NEXT_PUBLIC_GITHUB_REPO_ID as string}
-                category={process.env.NEXT_PUBLIC_GITHUB_CATEGORY as string}
-                categoryId={
-                  process.env.NEXT_PUBLIC_GITHUB_CATEGORY_ID as string
-                }
-                mapping='specific'
-                strict='0'
-                reactions-enabled='1'
-                emit-metadata='0'
-                input-position='bottom'
-                theme='dark'
-                lang='en'
-                loading='lazy'
-                reactionsEnabled='1'
-              />
+              <Comments />
             </div>
           )}
         </main>
