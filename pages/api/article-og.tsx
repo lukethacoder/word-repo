@@ -81,7 +81,7 @@ export default async function handler(req: NextRequest) {
               width: '100%',
               padding: '0 56px 42px',
               display: 'flex',
-              fontSize: 24,
+              fontSize: 36,
               fontStyle: 'normal',
               letterSpacing: '-0.025em',
               color: 'white',

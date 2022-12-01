@@ -23,7 +23,7 @@ export const Layout = ({
   urlPath,
   title = 'word_repo | luke secomb',
   description,
-  ogImage,
+  ogImage = `${process.env.NEXT_PUBLIC_ROOT_URL}/thumbnail.png`,
   ogType,
   metaColor,
   extraHeadTags,
@@ -57,20 +57,16 @@ export const Layout = ({
             <meta name='twitter:description' content={description} />
           </>
         )}
-        {ogImage && (
-          <>
-            <meta property='og:image' content={ogImage} />
-            <meta property='twitter:image:src' content={ogImage} />
-            <meta property='twitter:card' content='summary_large_image' />
-            <meta property='twitter:widgets:new-embed-design' content='on' />
-            <meta property='og:image:width' content='1200' />
-            <meta property='og:image:height' content='630' />
-            <meta
-              property='og:image:alt'
-              content='Auto generated OG image featuring the page title and posted date'
-            />
-          </>
-        )}
+        <meta property='og:image' content={ogImage} />
+        <meta property='twitter:image:src' content={ogImage} />
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:widgets:new-embed-design' content='on' />
+        <meta property='og:image:width' content='1200' />
+        <meta property='og:image:height' content='630' />
+        <meta
+          property='og:image:alt'
+          content='Auto generated OG image featuring the page title and posted date'
+        />
         {extraHeadTags && extraHeadTags}
       </Head>
       <div className='main' style={{ backgroundColor }}>
