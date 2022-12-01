@@ -18,7 +18,7 @@ const metadata = {
  */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const BASE_URL = process.env.NEXT_PUBLIC_ROOT_URL
+    const BASE_URL: string = process.env.NEXT_PUBLIC_ROOT_URL as string
     const BASE_IMAGE_URL = `${BASE_URL}/api/article-og`
     const BASE_TAG_URL = `${BASE_URL}/tags`
 
@@ -53,8 +53,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           <pubDate>${date}</pubDate>
           <image>
             <title>Auto generated open graph image for post</title>
-            <url>${ogImage}</url>
-            <link>${ogImage}</link>
+            <url><![CDATA[${ogImage}]]></url>
+            <link><![CDATA[${ogImage}]]></link>
           </image>
           ${excerpt && `<description>${excerpt}</description>`}
           ${
