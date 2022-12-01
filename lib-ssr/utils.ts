@@ -1,3 +1,4 @@
+import os from 'os'
 import path from 'path'
 import matter from 'gray-matter'
 import { load as yamlLoad, JSON_SCHEMA } from 'js-yaml'
@@ -81,7 +82,13 @@ export const getPostPaths = async (): Promise<string[]> => {
 }
 
 export const getSlugFromPath = (filePath: string): string => {
-  return /[^\\]*$/.exec(filePath)?.[0]?.replace('.mdx', '') || ''
+  console.log('extract path from ', filePath, os.type())
+
+  if (os.type() === 'Windows_NT') {
+    return /[^\\]*$/.exec(filePath)?.[0]?.replace('.mdx', '') || ''
+  }
+
+  return /[^\/]*$/.exec(filePath)?.[0]?.replace('.mdx', '') || ''
 }
 
 export const getPathFromSlug = (slug: string): string =>
