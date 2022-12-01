@@ -11,7 +11,12 @@ import remarkSlug from 'remark-slug'
 import remarkBlockQuotesExtended from 'remark-blockquotes-extended'
 import rehypeExternalLinks from 'rehype-external-links'
 
-import { getTocFromAst, remarkCheckboxLists, Post } from '../../lib-ssr'
+import {
+  getTocFromAst,
+  remarkCheckboxLists,
+  Post,
+  TocEntry,
+} from '../../lib-ssr'
 import { Header, Layout, Pill, TableOfContents } from '../../components'
 
 const components = {
@@ -27,7 +32,7 @@ export default function ArticlePage({
   toc,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   // if only one heading, don't bother showing the TOC
-  const showToc = toc.length > 1
+  const showToc = (toc as TocEntry[]).length > 1
 
   const ogImage = `/api/article-og?title=${encodeURIComponent(
     frontMatter.title
@@ -129,7 +134,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const { content, data } = postData
 
-    let toc = {}
+    let toc: TocEntry[] = []
     const source = await serialize(content, {
       mdxOptions: {
         remarkPlugins: [
