@@ -3,7 +3,7 @@ import { GoogleAnalytics } from '../lib'
 
 export default function Document() {
   return (
-    <Html>
+    <Html lang='en_US'>
       <Head />
       <body>
         <Main />

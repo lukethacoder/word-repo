@@ -18,12 +18,14 @@ interface ILayout {
   bannerBackgroundColor?: string
 }
 
+const FALLBACK_OG_IMAGE = `${process.env.NEXT_PUBLIC_ROOT_URL}/thumbnail.png`
+
 export const Layout = ({
   children,
   urlPath,
   title = 'word_repo | luke secomb',
   description,
-  ogImage = `${process.env.NEXT_PUBLIC_ROOT_URL}/thumbnail.png`,
+  ogImage = FALLBACK_OG_IMAGE,
   ogType,
   metaColor,
   extraHeadTags,
