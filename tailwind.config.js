@@ -88,6 +88,9 @@ module.exports = {
             'blockquote p::after': {
               content: `normal`,
             },
+            li: {
+              margin: `2px 0`,
+            },
           },
         },
       },

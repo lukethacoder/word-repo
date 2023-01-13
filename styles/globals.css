@@ -112,6 +112,10 @@ article:hover > p > .hover-snakeline {
 }
 .prose blockquote code {
   color: var(--tw-prose-code);
+  margin: 0 0 0 4px;
+}
+.prose blockquote code + code {
+  margin: 0;
 }
 .prose blockquote,
 .prose blockquote.primary {
@@ -238,8 +242,19 @@ article:hover > p > .hover-snakeline {
   min-height: 50vh;
 }
 
-.post-page .post-main .content {
-  
+.post-page .post-main .content .prose *::selection:not(pre code):not(pre):not(pre *) {
+  background-color: var(--theme-post-feature, green);
+  color: #000000;
+}
+
+
+.post-page .post-main .content .prose:first-child:has(img),
+.post-page .post-main .content .prose:first-child:has(img) img {
+  margin-top: 0;
+}
+
+.post-page .post-main .content img {
+  user-select: none;
 }
 
 .post-page .post-main > * {
