@@ -30,7 +30,6 @@ export const event = ({
 export const GoogleAnalyticsDocumentScript: React.FC = () => {
   return (
     <script
-      type='text/partytown'
       dangerouslySetInnerHTML={{
         __html: `
           window.dataLayer = window.dataLayer || [];

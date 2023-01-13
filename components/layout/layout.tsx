@@ -71,7 +71,7 @@ export const Layout = ({
         <meta name='twitter:card' content='summary_large_image' />
         <meta property='twitter:widgets:new-embed-design' content='on' />
         <meta property='og:image:width' content='1200' />
-        <meta property='og:image:height' content='620' />
+        <meta property='og:image:height' content='630' />
         <meta
           property='og:image:alt'
           content='Auto generated OG image featuring the page title and posted date'

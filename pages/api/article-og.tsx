@@ -44,7 +44,7 @@ export default async function handler(req: NextRequest) {
           style={{
             backgroundColor: 'black',
             backgroundSize: '150px 150px',
-            border: `8px solid ${color}`,
+            border: `12px solid ${color}`,
             height: '100%',
             width: '100%',
             display: 'flex',
@@ -124,7 +124,7 @@ export default async function handler(req: NextRequest) {
       ),
       {
         width: 1200,
-        height: 620,
+        height: 630,
         fonts: [
           {
             name: 'Fira Code',
