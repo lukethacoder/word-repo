@@ -19,6 +19,9 @@ export const Footer = () => {
         >
           main site
         </Link>
+        <Link href='/rss.xml' className='underline hover:italic'>
+          rss
+        </Link>
       </div>
     </footer>
   )
