@@ -43,7 +43,8 @@ export default function ArticlePage({
   // if only one heading, don't bother showing the TOC
   const showToc = (toc as TocEntry[]).length > 1
 
-  const ogImage = `/api/article-og?title=${encodeURIComponent(
+  const BASE_URL: string = process.env.NEXT_PUBLIC_ROOT_URL as string
+  const ogImage = `${BASE_URL}/api/article-og?title=${encodeURIComponent(
     frontMatter.title
   )}&color=${encodeURIComponent(
     frontMatter.color
@@ -54,6 +55,7 @@ export default function ArticlePage({
   return (
     <Layout
       title={`${frontMatter.title as string} | word_repo`}
+      description={frontMatter.description as string}
       bannerBackgroundColor={frontMatter.color}
       ogImage={ogImage}
       ogType='article'

@@ -47,6 +47,11 @@ export const Layout = ({
           content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
         />
         <meta
+          property='twitter:url'
+          content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
+        />
+
+        <meta
           name='canonical'
           content={`${process.env.NEXT_PUBLIC_ROOT_URL}/${urlPath}`}
         />
@@ -59,9 +64,11 @@ export const Layout = ({
             <meta name='twitter:description' content={description} />
           </>
         )}
+
+        <meta property='twitter:domain' content='blog.lukesecomb.digital' />
         <meta property='og:image' content={ogImage} />
-        <meta property='twitter:image:src' content={ogImage} />
-        <meta property='twitter:card' content='summary_large_image' />
+        <meta name='twitter:image' content={ogImage} />
+        <meta name='twitter:card' content='summary_large_image' />
         <meta property='twitter:widgets:new-embed-design' content='on' />
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content='620' />
