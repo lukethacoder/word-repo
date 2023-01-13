@@ -8,9 +8,9 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-      </body>
 
-      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics.DocumentScript />}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics.DocumentScript />}
+      </body>
     </Html>
   )
 }

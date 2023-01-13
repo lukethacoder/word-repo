@@ -104,13 +104,6 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-12'>
-          {/* <article className='flex flex-col gap-6'> */}
-          <article className='grid lg:grid-cols-2 gap-6'></article>
-        </div>
-      </div>
     </Layout>
   )
 }

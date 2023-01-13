@@ -106,7 +106,7 @@ export default function ArticlePage({
           { '--theme-post-feature': frontMatter.color } as React.CSSProperties
         }
       >
-        <main
+        <section
           className={`post-main flex flex-col gap-4 col-span-12 ${
             showToc ? `lg:col-span-8` : 'lg:col-span-9'
           }`}
@@ -121,7 +121,7 @@ export default function ArticlePage({
               <Comments />
             </div>
           )}
-        </main>
+        </section>
         <aside className={`col-span-12 ${showToc ? 'lg:col-span-4' : ''}`}>
           {toc.length > 1 && (
             <div

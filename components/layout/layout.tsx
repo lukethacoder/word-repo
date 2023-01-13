@@ -36,7 +36,7 @@ export const Layout = ({
     <>
       <Head>
         <title>{title}</title>
-        <meta name='og:title' content={title} />
+        <meta property='og:title' content={title} />
         <meta name='og:site_name' content='word_repo | luke secomb' />
         <meta name='twitter:title' content={title} />
         <meta name='twitter:site' content='@lu_ke____' />

@@ -12,7 +12,7 @@ export const Header = () => {
             className='w-12 mr-3'
             style={{ fill: `var(--theme-fg-default)` }}
           >
-            <svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 350 226.86'>
+            <svg viewBox='0 0 350 226.86'>
               <g id='Layer_1-2' data-name='Layer 1'>
                 <path d='M106.94,22.24,19.24,59l87.7,37v22.24L0,71.71V46.48L106.94,0Z'></path>
                 <path d='M243.06,204.62l87.7-36.73-87.7-37V108.67L350,155.15v25.24L243.06,226.86Z'></path>

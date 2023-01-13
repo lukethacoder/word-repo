@@ -30,6 +30,7 @@ export const event = ({
 export const GoogleAnalyticsDocumentScript: React.FC = () => {
   return (
     <script
+      type='text/partytown'
       dangerouslySetInnerHTML={{
         __html: `
           window.dataLayer = window.dataLayer || [];
@@ -61,12 +62,12 @@ export const GoogleAnalyticsScript: React.FC<{
   return (
     <>
       <Script
-        strategy='afterInteractive'
+        strategy='worker'
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
       />
       <Script
         id='gtm-init'
-        strategy='afterInteractive'
+        strategy='worker'
         dangerouslySetInnerHTML={{
           __html: `
           window.dataLayer = window.dataLayer || [];

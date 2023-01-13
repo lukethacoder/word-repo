@@ -21,8 +21,9 @@ export default function TagPage({
       </div>
 
       <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-12'>
-          <article className='grid lg:grid-cols-2 gap-6'>
+        <section className='col-span-12'>
+          <h2 className='sr-only'>Articles</h2>
+          <div className='grid lg:grid-cols-2 gap-6'>
             {posts.map(({ data: item }, key: number) => (
               <PostCard
                 key={item.slug}
@@ -39,8 +40,8 @@ export default function TagPage({
                 readingTime={item.readingTime}
               />
             ))}
-          </article>
-        </div>
+          </div>
+        </section>
       </div>
     </Layout>
   )

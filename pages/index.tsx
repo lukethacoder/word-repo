@@ -11,7 +11,7 @@ export default function Home({
     <Layout
       title='word_repo | luke secomb'
       urlPath=''
-      description='Home to a collection of posts covering anything technical and/or development related; JavaScript to Rust, React to Salesforce, and anything in between.'
+      description='Home to a collection of blog posts covering anything technical and/or development related; JavaScript to Rust, React to Salesforce, and anything in between.'
       bannerBackgroundColor='var(--theme-bg-dark)'
     >
       <div className='page-header max-width mx-auto px-4'>
@@ -22,9 +22,9 @@ export default function Home({
       </div>
 
       <div className='grid grid-cols-12 gap-4 max-width mx-auto px-4 mb-8'>
-        <div className='col-span-12'>
-          {/* <article className='flex flex-col gap-6'> */}
-          <article className='grid lg:grid-cols-2 gap-6'>
+        <section className='col-span-12'>
+          <h2 className='sr-only'>Articles</h2>
+          <div className='grid lg:grid-cols-2 gap-6'>
             {posts.map(({ data: item }, key) => (
               <PostCard
                 key={item.slug}
@@ -41,8 +41,8 @@ export default function Home({
                 readingTime={item.readingTime}
               />
             ))}
-          </article>
-        </div>
+          </div>
+        </section>
         {/* <aside className='col-span-3'>
           <div
             className='border-2 border-solid p-4'

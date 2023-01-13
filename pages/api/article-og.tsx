@@ -110,7 +110,6 @@ export default async function handler(req: NextRequest) {
                   height: '56px',
                   width: '86.39px',
                 }}
-                xmlns='https://www.w3.org/2000/svg'
                 viewBox='0 0 350 226.86'
               >
                 <g>
