@@ -3,6 +3,8 @@
 /.vscode
 /.git
 
+/pages/api/rss/feed.json
+
 # dependencies
 /node_modules
 /.pnp

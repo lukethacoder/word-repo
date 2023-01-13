@@ -40,7 +40,7 @@ const generateInput = (child: any) => {
         type: 'mdxJsxFlowElement',
         name: 'span',
         attributes: [
-          { type: 'mdxJsxAttribute', name: 'class', value: 'checkbox' },
+          { type: 'mdxJsxAttribute', name: 'className', value: 'checkbox' },
         ],
         children: [],
         data: { _mdxExplicitJsx: true },
