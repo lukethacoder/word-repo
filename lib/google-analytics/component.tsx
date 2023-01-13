@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
+import { Partytown } from '@builder.io/partytown/react'
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 
@@ -27,17 +28,28 @@ export const event = ({
   })
 }
 
-export const GoogleAnalyticsDocumentScript: React.FC = () => {
+export const GoogleAnalyticsDocumentScript: React.FC<{
+  trackingId: string
+}> = ({ trackingId }) => {
   return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        `,
-      }}
-    />
+    <>
+      <Partytown debug={true} forward={['gtag']} />
+      <script
+        type='text/partytown'
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function gtag(){window.dataLayer.push(arguments); 
+              console.log('gtag event');}
+            gtag('js', new Date());
+
+            gtag('config', '${trackingId}', { 
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
+    </>
   )
 }
 
