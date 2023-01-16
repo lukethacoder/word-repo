@@ -32,7 +32,7 @@ export const GoatCounterScript: React.FC<{
 
   return (
     <Script
-      strategy='worker'
+      strategy='afterInteractive'
       data-goatcounter={siteUrl}
       src={scriptSrc ?? '//gc.zgo.at/count.js'}
     />

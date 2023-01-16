@@ -6,7 +6,7 @@ export const ClarityScript: React.FC<{
   return (
     <Script
       id='clarity-script'
-      strategy='worker'
+      strategy='afterInteractive'
       dangerouslySetInnerHTML={{
         __html: `
         (function(c,l,a,r,i,t,y){

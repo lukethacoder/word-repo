@@ -33,9 +33,9 @@ export const GoogleAnalyticsDocumentScript: React.FC<{
 }> = ({ trackingId }) => {
   return (
     <>
-      <Partytown debug={true} forward={['gtag']} />
+      {/* <Partytown debug={false} forward={['gtag']} /> */}
       <script
-        type='text/partytown'
+        // type='text/partytown'
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -73,12 +73,12 @@ export const GoogleAnalyticsScript: React.FC<{
   return (
     <>
       <Script
-        strategy='worker'
+        strategy='afterInteractive'
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
       />
       <Script
         id='gtm-init'
-        strategy='worker'
+        strategy='afterInteractive'
         dangerouslySetInnerHTML={{
           __html: `
           window.dataLayer = window.dataLayer || [];
