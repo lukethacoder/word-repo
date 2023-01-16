@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import { GoogleAnalytics } from '../lib'
 
 export default function Document() {
   return (
@@ -8,12 +7,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics.DocumentScript
-            trackingId={process.env.NEXT_PUBLIC_GA_ID}
-          />
-        )}
       </body>
     </Html>
   )

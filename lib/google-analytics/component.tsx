@@ -39,8 +39,7 @@ export const GoogleAnalyticsDocumentScript: React.FC<{
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
-            window.gtag = function gtag(){window.dataLayer.push(arguments); 
-              console.log('gtag event');}
+            window.gtag = function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('config', '${trackingId}', { 
@@ -86,11 +85,7 @@ export const GoogleAnalyticsScript: React.FC<{
           gtag('js', new Date());
           gtag('config', '${gaId}', {
             page_path: window.location.pathname,
-          });
-
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());`,
+          });`,
         }}
       />
     </>
