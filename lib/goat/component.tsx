@@ -20,7 +20,7 @@ export const GoatCounterScript: React.FC<{
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      event(url.slice(1) as string)
+      event(url as string)
     }
 
     router.events.on('routeChangeComplete', handleRouteChange)
