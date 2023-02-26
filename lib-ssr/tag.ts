@@ -21,7 +21,9 @@ const getAllSlugs = async (): Promise<{ params: { slug: string } }[]> => {
 
       // only display content that is 'posted' based on the frontmatter data
       if (date <= formatDateData(new Date()) && draft !== true) {
-        postTags.forEach((tag: string) => tags.add(tag))
+        if (postTags) {
+          postTags.forEach((tag: string) => tags.add(tag))
+        }
       }
 
       return tags
@@ -49,13 +51,15 @@ const getAllWithMetadata = async (): Promise<{
 
     // only display content that is 'posted' based on the frontmatter data
     if (date <= formatDateData(new Date()) && draft !== true) {
-      postTags.forEach((tag) => {
-        if (Object.keys(tags).includes(tag)) {
-          tags[tag] += 1
-        } else {
-          tags[tag] = 1
-        }
-      })
+      if (postTags) {
+        postTags.forEach((tag) => {
+          if (Object.keys(tags).includes(tag)) {
+            tags[tag] += 1
+          } else {
+            tags[tag] = 1
+          }
+        })
+      }
     }
 
     return tags

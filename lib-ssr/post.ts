@@ -61,10 +61,10 @@ const getBySlug = async (slug: string): Promise<IPost | null> => {
  */
 const getByTag = async (tag: string): Promise<IPost[]> =>
   (await getAll())
-    .filter(
-      (post) =>
-        post.data.date <= formatDateData(new Date()) &&
-        post.data.tags.includes(tag)
+    .filter((post) =>
+      post.data.date <= formatDateData(new Date()) && post.data.tags
+        ? post.data.tags.includes(tag)
+        : false
     )
     .sort(sortPostByDate)
 
