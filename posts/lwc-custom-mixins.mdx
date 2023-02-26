@@ -1,0 +1,116 @@
+---
+title: LWC Custom Mixins
+date: 2023-02-26
+color: '#57476b'
+excerpt: A short guide on how to implement your own custom mixins in LWC
+tags: ['salesforce', 'lwc']
+---
+
+Mixins (or Abstract subclasses) are templates for classes that allow us to write generic functionality to be reused. Given the nature of classes, it is not possible to have more than one superclass. Mixins allow us to pass the base class as a property and unlock nested inheritance.
+
+## JavaScript Mixin Usage
+
+Before we dive into an LWC example, lets look at how we can use mixins in a plain javascript environment.
+
+Firstly, we must create a mixin function that our classes can use. This should be a piece of generic functionality that multiple classes can utalise.
+
+```javascript
+// A simple Mixin method
+// adds the `windowSize()` method to classes that implement this mixin
+export const WindowSizeMixin = (BaseClass) =>
+  class extends BaseClass {
+    get windowSize() {
+      return {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }
+    }
+  }
+```
+
+```javascript
+import { WindowSizeMixin } from './windowSizeMixin'
+
+// Implementing the `WindowSizeMixin` gives us access to the
+// `this.windowSize` getter
+class Header extends WindowSizeMixin(BaseClass) {
+  getWindowSize() {
+    return this.windowSize
+  }
+}
+```
+
+In the above example, calling the `getWindowSize()` function on our Header class will return the object defined in the `WindowSizeMixin`.
+
+## LWC Mixin Usage
+
+Now we have a basic understanding of how mixins work in JavaScript, lets look at how the concept applies to LWC. Using mixins in LWC is almost identical with one difference, your `BaseClass` should be `LightningElement` (or another class that has extended `LightningElement`).
+
+We'll assume the same above mixin source code that we used above (`WindowSizeMixin`) but instead our implementation will be a LWC component.
+
+```javascript
+// don't forget to import LightningElement, we need to extend it as our base class
+import { LightningElement } from 'lwc'
+
+// assume our mixin has been created as a separate LWC to be used by multiple components
+import { WindowSizeMixin } from 'c/windowSizeMixin'
+
+// LWC expects a default export of our `LightingElement` extended component
+export default class Header extends WindowSizeMixin(LightningElement) {
+  getWindowSize() {
+    // available via the WindowSizeMixin
+    return this.windowSize
+  }
+}
+```
+
+## Stacking Mixins
+
+The beauty of mixins is that you can use more than one. This can be useful for creating smaller snippet mixins for similar functionality that is used across multiple LWCs.
+
+Lets have a quick look at an example. We will create another mixin method.
+
+```javascript
+export const DateMixin = (BaseClass) =>
+  class extends BaseClass {
+    // a function that returns the current date as an object
+    getDate() {
+      const date = new Date()
+      return {
+        day: date.getDate(),
+        month: date.getMonth() + 1,
+        year: date.getFullYear(),
+      }
+    }
+  }
+```
+
+Lets update our LWC example from above to include the new `DateMixin`.
+
+```javascript
+// don't forget to import LightningElement, we need to extend it as our base class
+import { LightningElement } from 'lwc'
+
+// assume our mixins have been created as a separate LWC to be used by multiple components
+import { WindowSizeMixin } from 'c/windowSizeMixin'
+import { DateMixin } from 'c/dateMixin'
+
+// LWC expects a default export of our component
+// we can stack mixins here
+export default class Header extends DateMixin(
+  WindowSizeMixin(LightningElement)
+) {
+  getWindowSize() {
+    // available via the WindowSizeMixin
+    return this.windowSize
+  }
+  getCurrentDate() {
+    // available via the DateMixin
+    return this.getDate()
+  }
+}
+```
+
+## Wrapping up
+
+In conclusion, mixins are an incredibly useful tool in LWC development. They allow us to write generic, reusable functionality that can be shared between multiple components. By stacking multiple mixins, we are able to compose complex components from smaller, focused mixins. Mixins help keep our code DRY (Don't Repeat Yourself) and maintainable.
