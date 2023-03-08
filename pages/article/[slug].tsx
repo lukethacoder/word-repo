@@ -48,9 +48,11 @@ export default function ArticlePage({
     frontMatter.title
   )}&color=${encodeURIComponent(
     frontMatter.color
-  )}&reading-time=${encodeURIComponent(
-    frontMatter.readingTime.text
-  )}&date=${encodeURIComponent(frontMatter.dateFormatted)}`
+  )}&reading-time=${encodeURIComponent(frontMatter.readingTime.text)}&date=${
+    frontMatter.editedDateFormatted
+      ? encodeURIComponent(frontMatter.editedDateFormatted)
+      : encodeURIComponent(frontMatter.dateFormatted)
+  }`
 
   return (
     <Layout
