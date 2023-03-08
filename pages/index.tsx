@@ -35,8 +35,8 @@ export default function Home({
                 excerpt={item.excerpt}
                 tags={item.tags}
                 date={{
-                  raw: item.date,
-                  dateFormatted: item.dateFormatted,
+                  raw: item.editedDate || item.date,
+                  dateFormatted: item.editedDateFormatted || item.dateFormatted,
                 }}
                 readingTime={item.readingTime}
               />

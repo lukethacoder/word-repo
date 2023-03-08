@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next/types'
 import { Tag, Post } from '../../lib-ssr'
 import { Layout, PostCard } from '../../components'
 import { IPost } from '../../types/global'
-import Head from 'next/head'
 
 export default function TagPage({
   slug,
@@ -34,8 +33,8 @@ export default function TagPage({
                 excerpt={item.excerpt}
                 tags={item.tags}
                 date={{
-                  raw: item.date,
-                  dateFormatted: item.dateFormatted,
+                  raw: item.editedDate || item.date,
+                  dateFormatted: item.editedDateFormatted || item.dateFormatted,
                 }}
                 readingTime={item.readingTime}
               />

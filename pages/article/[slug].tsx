@@ -85,11 +85,25 @@ export default function ArticlePage({
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
           <h1 className='text-4xl'>{frontMatter.title}</h1>
+
           <span>
-            <time dateTime={frontMatter.date}>{frontMatter.dateFormatted}</time>
+            {frontMatter.editedDateFormatted ? (
+              <time dateTime={frontMatter.editedDate}>
+                {frontMatter.editedDateFormatted}
+              </time>
+            ) : (
+              <time dateTime={frontMatter.date}>
+                {frontMatter.dateFormatted}
+              </time>
+            )}
             {` -> `}
             <span>{frontMatter.readingTime.text}</span>
           </span>
+          {frontMatter.editedDateFormatted && (
+            <time className='text-xs' dateTime={frontMatter.date}>
+              Originally published {frontMatter.dateFormatted}
+            </time>
+          )}
           <ul className='mt-4 flex flex-wrap gap-2'>
             {frontMatter.tags &&
               frontMatter.tags.map((item: string) => (
