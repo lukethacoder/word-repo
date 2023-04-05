@@ -41,8 +41,12 @@ export const formatDate = (date: Date): string =>
 export const formatDateData = (date: Date): string =>
   dayjs(date).format('YYYY-MM-DD')
 
-export const sortPostByDate = (a: IPost, b: IPost) =>
-  a.data.date < b.data.date ? 1 : -1
+export const sortPostByDate = (a: IPost, b: IPost) => {
+  const aDate = a.data.editedDate || a.data.date
+  const bDate = b.data.editedDate || b.data.date
+
+  return aDate < bDate ? 1 : -1
+}
 
 export const formatMatter = (slug: string, content: string): IPost => {
   const matterData = matter(content, MATTER_CONFIG)
