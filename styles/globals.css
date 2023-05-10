@@ -260,3 +260,7 @@ article:hover > p > .hover-snakeline {
 .post-page .post-main > * {
   margin-top: 0;
 }
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  margin-bottom: 0;
+}
