@@ -14,9 +14,9 @@ body {
 
   --theme-max-width: 1200px;
 
-  --theme-bg-default: theme('colors.grey.700');/* #0E0E0E; */
-  --theme-bg-subtle: theme('colors.grey.500'); /* #161616; */
-  --theme-bg-dark: theme('colors.black');/* #000000; */
+  --theme-bg-default: #222129;
+  --theme-bg-subtle: #17171c;
+  --theme-bg-dark: #0c0b0e;
 
   --theme-fg-default: theme('colors.mercury.50');
   --theme-fg-subtle: theme('colors.mercury.500');

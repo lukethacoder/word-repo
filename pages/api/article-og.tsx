@@ -42,7 +42,7 @@ export default async function handler(req: NextRequest) {
       (
         <div
           style={{
-            backgroundColor: 'black',
+            backgroundColor: '#0c0b0e',
             backgroundSize: '150px 150px',
             border: `12px solid ${color}`,
             height: '100%',
