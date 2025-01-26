@@ -95,7 +95,6 @@ article:hover > p > .hover-snakeline {
 }
 
 .prose a:hover {
-  font-style: italic;
   text-decoration: underline;
   color: var(--theme-post-feature, #ffffff);
 }

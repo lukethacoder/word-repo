@@ -86,7 +86,7 @@ export default function ArticlePage({
     >
       <div className='page-header'>
         <div className='w-full flex flex-col justify-end max-width mx-auto px-4 pb-12'>
-          <h1 className='text-4xl'>{frontMatter.title}</h1>
+          <h1 className='text-4xl text-balance'>{frontMatter.title}</h1>
 
           <span>
             {frontMatter.editedDateFormatted ? (
