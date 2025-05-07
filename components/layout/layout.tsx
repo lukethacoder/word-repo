@@ -29,7 +29,7 @@ export const Layout = ({
   ogType,
   metaColor,
   extraHeadTags,
-  backgroundColor = 'var(--theme-bg-default)',
+  backgroundColor = 'var(--theme-bg-dark)',
   bannerBackgroundColor = 'var(--theme-bg-dark)',
 }: ILayout) => {
   return (

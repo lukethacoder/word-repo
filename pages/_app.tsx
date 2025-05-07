@@ -1,15 +1,10 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Fira_Code, Roboto } from '@next/font/google'
+import { Roboto } from '@next/font/google'
 
 import '../styles/globals.css'
-import '../styles/prism.css'
-import { Clarity, Goat, GoogleAnalytics } from '../lib'
+import { Goat, GoogleAnalytics } from '../lib'
 
-const firaCode = Fira_Code({
-  weight: '500',
-  subsets: ['latin'],
-})
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
@@ -25,9 +20,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Goat.Script
           siteUrl={`https://${process.env.NEXT_PUBLIC_GOAT_COUNTER}.goatcounter.com/count`}
         />
-      )}
-      {process.env.NEXT_PUBLIC_CLARITY_CODE && (
-        <Clarity.Script clarityKey={process.env.NEXT_PUBLIC_CLARITY_CODE} />
       )}
 
       <Head>
@@ -59,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <Component
-        className={`${firaCode.className} ${roboto.className}`}
+        className={`${roboto.className}`}
         {...pageProps}
       />
     </>

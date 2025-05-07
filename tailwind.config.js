@@ -43,6 +43,7 @@ module.exports = {
           800: '#C9C9C9',
           900: '#BFBFBF',
         },
+        primary: 'var(--theme-primary)',
         white: '#fff',
         black: '#000',
       },
@@ -66,7 +67,6 @@ module.exports = {
         '7xl': '5rem',
       },
       fontFamily: {
-        mono: ['"Fira Code"', ...defaultTheme.fontFamily.mono],
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
         serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
       },

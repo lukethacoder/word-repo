@@ -1,20 +1,32 @@
-/** @type {import('next').NextConfig} */
-import withBundleAnalyzer from '@next/bundle-analyzer'
-import nextPwa from 'next-pwa'
-import runtimeCaching from 'next-pwa/cache.js'
+const ARTICLE_SLUGS = [
+  'local-lwc-development-with-aura-enabled-apex',
+  'lwc-custom-mixins',
+  'lwc-nested-components',
+  'my-fresh-windows-machine-developer-setup',
+  'salesforce-trekken-cms-migration-tool',
+  'sfdx-how-to-setup-a-scratch-org',
+  'spotify-playlist-backup-using-github-actions',
+  'up-your-vs-code-game-with-workspaces',
+]
 
-const withPWA = nextPwa({
-  dest: 'public',
-  runtimeCaching,
-  disable: process.env.NODE_ENV === 'development',
-})
+console.log(
+  'process.env.NEXT_PUBLIC_ROOT_URL ',
+  process.env.NEXT_PUBLIC_ROOT_URL
+)
 
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
-  experimental: {
-    appDir: false,
+  async redirects() {
+    return [
+      // ...postRedirects,
+      {
+        source: '/about',
+        destination: '/',
+        permanent: true,
+      },
+    ]
   },
   rewrites: async () => [
     {
@@ -28,6 +40,4 @@ const nextConfig = {
   ],
 }
 
-export default withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})(withPWA(nextConfig))
+export default nextConfig
