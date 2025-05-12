@@ -20,7 +20,7 @@
     a personal blog site to share my thoughts
     <br />
     <br />
-    <a href="https://blog.lukesecomb.digital">View Site</a>
+    <a href="https://lukesecomb.digital/blog">View Site</a>
     ·
     <a href="https://github.com/lukethacoder/word-repo/issues">Report Bug</a>
     ·
@@ -28,90 +28,9 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+## 🏡 A new home
 
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Built With
-
-- [![Next][next.js]][next-url]
-- [![React][react.js]][react-url]
-- [![TailwindCSS][tailwindcss]][tailwindcss-url]
-- [![GoatCounter][goatcounter]][goatcounter-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
-## Getting Started
-
-This site has been built using NextJS 13, with TypeScript and TailwindCSS.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-Make sure you have `node` and `npm` installed.
-
-- npm
-  ```sh
-  yarn global add npm@latest
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/lukethacoder/word-repo.git
-   ```
-2. Install NPM packages
-   ```sh
-   yarn
-   ```
-3. Clone the `.env.example` and rename to `.env.local`. Replace the variables with your own.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
-
-## License
-
-Distributed under the GNU General Public License v3.0. See [LICENSE](https://github.com/lukethacoder/word-repo/blob/main/LICENSE) for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact
-
-Luke Secomb - [@lu_ke\_\_\_\_](https://twitter.com/lu_ke____)
-
-Project Link: [https://github.com/lukethacoder/word-repo](https://github.com/lukethacoder/word-repo)
+This site has been merged with [this site](https://lukesecomb.digital). This repo will remain here to facilitate redirects and as an archive of the original build (in the git history).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

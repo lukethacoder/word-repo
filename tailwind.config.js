@@ -43,6 +43,7 @@ module.exports = {
           800: '#C9C9C9',
           900: '#BFBFBF',
         },
+        primary: 'var(--theme-primary)',
         white: '#fff',
         black: '#000',
       },
@@ -66,33 +67,8 @@ module.exports = {
         '7xl': '5rem',
       },
       fontFamily: {
-        mono: ['"Fira Code"', ...defaultTheme.fontFamily.mono],
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
         serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            'code::before': {
-              content: `normal`,
-            },
-            'code::after': {
-              content: `normal`,
-            },
-            blockquote: {
-              fontWeight: `400`,
-            },
-            'blockquote p::before': {
-              content: `normal`,
-            },
-            'blockquote p::after': {
-              content: `normal`,
-            },
-            li: {
-              margin: `2px 0`,
-            },
-          },
-        },
       },
     },
   },
