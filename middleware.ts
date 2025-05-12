@@ -11,16 +11,16 @@ export function middleware(request: NextRequest) {
   if (pathname.includes('/article')) {
     const slug = request.nextUrl.pathname.replace('/article/', '')
 
+    const responseUrl = new URL(`/blog/${slug}`, 'https://lukesecomb.digital')
+    responseUrl.searchParams.set('redirect', 'word_repo')
+
     // redirect to new domain
-    return NextResponse.redirect(
-      new URL(`/blog/${slug}`, 'https://lukesecomb.digital'),
-      308
-    )
+    return NextResponse.redirect(responseUrl, 308)
   }
 
+  const responseUrl = new URL(`/blog/`, 'https://lukesecomb.digital')
+  responseUrl.searchParams.set('redirect', 'word_repo')
+
   // all other requests redirect to the main blog page (tags)
-  return NextResponse.redirect(
-    new URL(`/blog/`, 'https://lukesecomb.digital'),
-    308
-  )
+  return NextResponse.redirect(responseUrl, 308)
 }
