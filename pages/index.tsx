@@ -1,14 +1,46 @@
-import { InferGetStaticPropsType } from 'next/types'
-import { Layout, PostCard } from '../components'
+import { Layout } from '../components'
 
-import { Post } from '../lib-ssr'
-import { IPost } from '../types/global'
+const BASE_URL = '/article'
 
-const BASE_URL = 'https://lukesecomb.digital/blog'
+const ARTICLES = [
+  {
+    title: 'Local LWC Development with @AuraEnabled Apex',
+    slug: 'local-lwc-development-with-aura-enabled-apex',
+    date: '2025-01-26',
+  },
+  {
+    title: 'Lightning Web Components: Nested Components',
+    slug: 'lwc-nested-components',
+    date: '2023-03-20',
+  },
+  {
+    title: 'Lightning Web Components: Custom Mixins',
+    slug: 'lwc-custom-mixins',
+    date: '2023-03-18',
+  },
+  {
+    title: 'Salesforce Trekken: CMS Migration Tool',
+    slug: 'salesforce-trekken-cms-migration-tool',
+    date: '2023-01-13',
+  },
+  {
+    title: 'SFDX How to setup a Scratch Org',
+    slug: 'sfdx-how-to-setup-a-scratch-org',
+    date: '2019-12-09',
+  },
+  {
+    title: 'Spotify Playlist backup using Github Actions',
+    slug: 'spotify-playlist-backup-using-github-actions',
+    date: '2022-01-13',
+  },
+  {
+    title: 'Up your Vs Code game with Workspaces',
+    slug: 'up-your-vs-code-game-with-workspaces',
+    date: '2019-06-07',
+  }
+]
 
-export default function Home({
-  posts,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home() {
   return (
     <Layout
       title='word_repo | luke secomb'
@@ -33,14 +65,15 @@ export default function Home({
         <section className='col-span-12'>
           <h2 className='sr-only'>Articles</h2>
           <div className='grid gap-2'>
-            {posts.map(({ data: item }, key) => (
-              <span key={key} className='flex'>
+            {ARTICLES.map((item, key) => (
+              <span key={key} className='flex items-center gap-1'>
                 <a
                   href={`${BASE_URL}/${item.slug}`}
                   className='py-1 underline hover:text-primary'
                 >
                   {item.title}
                 </a>
+                <small className='opacity-60 no-underline'>({item.date})</small>
               </span>
             ))}
           </div>
@@ -48,8 +81,4 @@ export default function Home({
       </div>
     </Layout>
   )
-}
-export const getStaticProps = async () => {
-  const posts: IPost[] = await Post.getAll()
-  return { props: { posts } }
 }

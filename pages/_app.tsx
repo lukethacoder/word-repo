@@ -1,14 +1,8 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Roboto } from '@next/font/google'
 
 import '../styles/globals.css'
 import { Goat, GoogleAnalytics } from '../lib'
-
-const roboto = Roboto({
-  weight: '400',
-  subsets: ['latin'],
-})
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -51,7 +45,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <Component
-        className={`${roboto.className}`}
         {...pageProps}
       />
     </>

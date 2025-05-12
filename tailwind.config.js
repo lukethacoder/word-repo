@@ -70,30 +70,6 @@ module.exports = {
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
         serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            'code::before': {
-              content: `normal`,
-            },
-            'code::after': {
-              content: `normal`,
-            },
-            blockquote: {
-              fontWeight: `400`,
-            },
-            'blockquote p::before': {
-              content: `normal`,
-            },
-            'blockquote p::after': {
-              content: `normal`,
-            },
-            li: {
-              margin: `2px 0`,
-            },
-          },
-        },
-      },
     },
   },
   variants: {
